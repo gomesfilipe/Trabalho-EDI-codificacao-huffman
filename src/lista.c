@@ -1,12 +1,13 @@
 #include "../include/lista.h"
 
+#define TAM 256 //Número de caracteres da tabela ascii
+
 typedef struct celula Celula;
 
 struct celula{
     Tree* tree;
     Celula *next;
 };
-
 
 struct list{
     Celula* first;
@@ -37,7 +38,6 @@ int listVazia(List* list){
     if(list->tam == 0){
         return 1;
     }
-    
     return 0;
 }
 
@@ -45,41 +45,26 @@ int listVazia(List* list){
 void insereOrdenado(List* list, Tree* tree){
     Celula* nova = (Celula*) malloc(sizeof(Celula));
     nova->tree = tree;
-    //!printf("[%d]\n", list->tam);
     Celula* i;
     Celula* ant = NULL;
     
-    // Casos:
-    // 1) Inserindo numa lista vazia OK
-    // 2) Inserindo primeiro da lista OK
-    // 3) Inserindo último da lista OK
-    // 4) Caso comum (Entre duas células) OK
-
     if(listVazia(list)){
-        //!printf("chegou aq\n");
         nova->next = NULL;
         list->first = nova;
         list->last = nova;
         list->tam++;
         return;
     }
-    //!printf("entrou for\n");
+
     for(i = list->first; ; i = i->next){
-        //!printf("[%p]\n", i);
         if(i != NULL && getPeso(tree) <= getPeso(i->tree)){ // Se peso do elemento a ser inserido é menor que o do nó, insira.
-            //!printf("entrou primeiro if\n");
-        
+
             if(i == list->first){  // Elemento tem peso menor que todos os outros que já estão na lista.
                 nova->next = list->first;
                 list->first = nova;
                 break;
             
-            //} else if(i == NULL){ // Elemento tem peso maior que todos os outros que já estão na lista.
-            //     nova->next = NULL;
-            //     ant->next = nova;
-            //     list->last = nova; 
-            //     break;
-                
+        
             } else{ // Caso comum
                 ant->next = nova;
                 nova->next = i;
@@ -119,7 +104,7 @@ void imprimeLista(List* list){
     int peso;
     for(i = list->first; i != NULL; i = i->next){
         peso = getPeso(i->tree);
-        printf("(%d) ", peso);
+        printf("%d ", peso);
     }
     printf("\n");
 }
@@ -135,9 +120,38 @@ Tree* huffman(List* list){
         peso1 = getPeso(tree1);
         peso2 = getPeso(tree2);
      
-        tree3 = criaTree('a', peso1 + peso2, tree1, tree2);
+        tree3 = criaTree(0, peso1 + peso2, tree1, tree2); // Elem é 0, pois é o NULL na tabela ascii. Tree3 tem conteúdo NULL pois seu nó raíz não é uma folha.
         insereOrdenado(list, tree3);
     }
 
     return tree3;
+}
+
+int* calculaPesos(FILE *f){
+    int* pesos = (int*) calloc(TAM, sizeof(int)); //Declaração do vetor de caracteres
+    char caractere;
+    while(fscanf(f, "%c", &caractere) == 1){
+        //printf("(%c) ", caractere);
+        pesos[caractere]++;
+    }
+    return pesos;
+}
+
+List* geraListaTree(int* pesos){
+    List* list = criaLista();
+    for(int i = 0; i < TAM; i++){
+        if(pesos[i] > 0){
+            insereOrdenado(list, criaTree(i, pesos[i], NULL, NULL));
+        }
+    }
+    return list;
+}
+
+Tree* geraArvoreCodificacao(FILE *f){
+    int *pesos = calculaPesos(f);
+    List* list = geraListaTree(pesos);
+    Tree* tree = huffman(list);
+    free(pesos);
+    liberaLista(list);
+    return tree;
 }

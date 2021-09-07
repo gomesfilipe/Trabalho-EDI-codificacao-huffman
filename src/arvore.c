@@ -71,8 +71,4 @@ void imprimeTree(Tree* tree){
 }
 
 
-//testar funcao removeFirst e funcao huffman OK
-//fazer funcao de imprimir arvore e testae OK
-//makefile OK
-
-//le o arquivo , ve quantidade de elementos, fazer tabela
+//perguntar para patricia sobre os acentos, pq esta ficando como se fosse dois carcteres em branco

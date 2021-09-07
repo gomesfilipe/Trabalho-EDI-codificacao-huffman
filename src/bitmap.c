@@ -63,7 +63,7 @@ bitmap* bitmapInit(unsigned int max_size) {
 	bitmap* bm;
     bm = (bitmap*)malloc(sizeof(bitmap));
 	// definir tamanho maximo em bytes, com arredondamento para cima
-	unsigned int max_sizeInBytes=(max_size+7)/8;
+	unsigned int max_sizeInBytes=(max_size+7)/8; 
 	// alocar espaco de memoria para o tamanho maximo em bytes
 	bm->contents=calloc(max_sizeInBytes, sizeof(char));
 	// verificar alocacao de memoria
@@ -87,7 +87,7 @@ unsigned char bitmapGetBit(bitmap* bm, unsigned int index) // index in bits
 	assert(index<bm->length, "Acesso a posicao inexistente no mapa de bits.");
 	// index/8 e' o indice do byte que contem o bit em questao
 	// 7-(index%8) e' o deslocamento do bit em questao no byte
-	return (bm->contents[index/8] >> (7-(index%8))) & 0x01;
+	return (bm->contents[index/8] >> (7-(index%8))) & 0x01;  
 }
 
 /**
@@ -105,7 +105,7 @@ static void bitmapSetBit(bitmap* bm, unsigned int index, unsigned char bit) {
     bit=bit & 0x01;
     bit=bit<<(7-(index%8));
     bm->contents[index/8]= bm->contents[index/8] | bit;
-}
+} 
 
 
 /**

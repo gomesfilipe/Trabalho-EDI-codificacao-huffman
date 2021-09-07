@@ -17,7 +17,7 @@ int main(void) {
 	bitmapAppendLeastSignificantBit(bm, 1);
 	bitmapAppendLeastSignificantBit(bm, 0);
 	bitmapAppendLeastSignificantBit(bm, 1);
-
+	// 1000 1001 0100 0000       tem 10 bits 1 byte e 2bit
 	printf("%0xh\n", bitmapGetContents(bm)[0]);			
 	printf("%0xh\n", bitmapGetContents(bm)[1]);
 	printf("length=%0d\n", bitmapGetLength(bm));
@@ -26,7 +26,7 @@ int main(void) {
 	for (i=0; i<bitmapGetLength(bm); i++) {
 		printf("bit #%d = %0xh\n", i, bitmapGetBit(bm, i));
 	}
-
+	
     
     bitmapLibera(bm);
     
