@@ -57,8 +57,22 @@ int altura(Tree* tree){
     return 1 + maior(altura(tree->left), altura(tree->right));
 }
 
+void imprimeTree(Tree* tree){
+    printf("<");
+    if(!ehVazia(tree)){
+        printf("%d", getPeso(tree));
+        if(ehFolha(tree)){
+            printf("[%c]", getElem(tree));
+        }
+        imprimeTree(tree->left);
+        imprimeTree(tree->right);
+    }
+    printf(">");
+}
 
-//testar funcao removeFirst e funcao huffman
-//fazer funcao de imprimir arvore
+
+//testar funcao removeFirst e funcao huffman OK
+//fazer funcao de imprimir arvore e testae OK
+//makefile OK
 
 //le o arquivo , ve quantidade de elementos, fazer tabela

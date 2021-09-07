@@ -135,7 +135,7 @@ Tree* huffman(List* list){
         peso1 = getPeso(tree1);
         peso2 = getPeso(tree2);
      
-        tree3 = criaTree(NULL, peso1 + peso2, tree1, tree2);
+        tree3 = criaTree('a', peso1 + peso2, tree1, tree2);
         insereOrdenado(list, tree3);
     }
 

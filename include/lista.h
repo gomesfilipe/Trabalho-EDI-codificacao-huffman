@@ -44,4 +44,6 @@ Tree* removeFirst(List* list);
 
 void imprimeLista(List* list);
 
+Tree* huffman(List* list);
+
 #endif /* LISTA_H_ */

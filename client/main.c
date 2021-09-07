@@ -6,17 +6,17 @@
 #include "../include/lista.h"
 
 int main(){
-    Tree* a = criaTree('x', 2,  NULL, NULL);
-    Tree* b = criaTree('x', 17, NULL, NULL);
-    Tree* c = criaTree('x', 4, NULL, NULL);
-    Tree* d = criaTree('x', 7,  NULL, NULL);
-    Tree* e = criaTree('x', 0,  NULL, NULL);
-    Tree* f = criaTree('x', 14, NULL, NULL);
-    Tree* g = criaTree('x', 2,  NULL, NULL);
-    Tree* h = criaTree('x', 19, NULL, NULL);
-    Tree* i = criaTree('x', 20, NULL, NULL);
-    Tree* j = criaTree('x', 23, NULL, NULL);
-    Tree* k = criaTree('x', 13, NULL, NULL);
+    Tree* a = criaTree('a', 2,  NULL, NULL);
+    Tree* b = criaTree('b', 17, NULL, NULL);
+    Tree* c = criaTree('c', 4, NULL, NULL);
+    Tree* d = criaTree('d', 7,  NULL, NULL);
+    Tree* e = criaTree('e', 0,  NULL, NULL);
+    Tree* f = criaTree('f', 14, NULL, NULL);
+    Tree* g = criaTree('g', 2,  NULL, NULL);
+    Tree* h = criaTree('h', 19, NULL, NULL);
+    Tree* i = criaTree('i', 20, NULL, NULL);
+    Tree* j = criaTree('j', 23, NULL, NULL);
+    Tree* k = criaTree('k', 13, NULL, NULL);
 
     List* list = criaLista();
     insereOrdenado(list, a);
@@ -33,17 +33,36 @@ int main(){
 
     imprimeLista(list);
 
+    Tree* arv = huffman(list);
+    printf("altura [%d]\n", altura(arv));
+    imprimeTree(arv);
+    // removeFirst(list);
+    // removeFirst(list);
+    // removeFirst(list);
+    // removeFirst(list);
+    // removeFirst(list);
+    // removeFirst(list);
+    // removeFirst(list);
+    // removeFirst(list);
+    // removeFirst(list);
+    // removeFirst(list);
+    // removeFirst(list);
+    // removeFirst(list);
+   
+
+    // imprimeLista(list);
+    liberaTree(arv);
     liberaLista(list);
-    liberaTree(a);
-    liberaTree(b);
-    liberaTree(c);
-    liberaTree(d);
-    liberaTree(e);
-    liberaTree(f);
-    liberaTree(g);
-    liberaTree(h);
-    liberaTree(i);
-    liberaTree(j);
-    liberaTree(k);
+    // liberaTree(a);
+    // liberaTree(b);
+    // liberaTree(c);
+    // liberaTree(d);
+    // liberaTree(e);
+    // liberaTree(f);
+    // liberaTree(g);
+    // liberaTree(h);
+    // liberaTree(i);
+    // liberaTree(j);
+    // liberaTree(k);
     return 0;
 }

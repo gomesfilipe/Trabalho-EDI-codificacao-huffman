@@ -66,5 +66,6 @@ int altura(Tree* tree);
 
 int maior(int a, int b);
 
+void imprimeTree(Tree* tree);
 
 #endif /* ARVORE_H_ */
