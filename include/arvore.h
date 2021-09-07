@@ -68,4 +68,12 @@ int maior(int a, int b);
 
 void imprimeTree(Tree* tree);
 
+char** criaTabelaCodificacao(Tree* tree);
+
+char** inicializaTabelaCodificacao(Tree* tree, char** tabela, char* caminho);
+
+void liberaTabelaCodificacao(char** tabela);
+
+void imprimeTabelaCodificacao(char** tabela);
+
 #endif /* ARVORE_H_ */

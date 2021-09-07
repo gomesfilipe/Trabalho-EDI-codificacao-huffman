@@ -43,6 +43,7 @@ clean: # Remove pasta com os arquivos objeto.
 
 run: # Executa o programa com valgrind.
 	valgrind ./$(TARGET)
+#	./$(TARGET)
 
 reset: # Remove todo o conteúdo da pasta.
 	-rm -f -r data/Saida/*

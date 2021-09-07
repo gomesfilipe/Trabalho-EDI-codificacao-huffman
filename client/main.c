@@ -9,7 +9,12 @@
 int main(){
     FILE *f = fopen("string.txt", "r");
     Tree* tree = geraArvoreCodificacao(f);
-    imprimeTree(tree);
+    //imprimeTree(tree);
+
+    char** tabela = criaTabelaCodificacao(tree);
+    tabela = inicializaTabelaCodificacao(tree, tabela, "");
+
+    imprimeTabelaCodificacao(tabela);
 
     // int *pesos = calculaPesos(f);
     // for(int i =0 ; i< TAM ; i++){
@@ -20,6 +25,7 @@ int main(){
     // }
     fclose(f);
     liberaTree(tree);
+    liberaTabelaCodificacao(tabela);
     // Tree* a = criaTree('a', 2,  NULL, NULL);
     // Tree* b = criaTree('b', 17, NULL, NULL);
     // Tree* c = criaTree('c', 4, NULL, NULL);
