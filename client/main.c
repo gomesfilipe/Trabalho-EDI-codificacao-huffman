@@ -4,14 +4,17 @@
 #include "../include/bitmap.h"
 #include "../include/arvore.h"
 #include "../include/lista.h"
+#include "../include/huffman.h"
+
 // bom esse bombom
 #define TAM 256
+
 int main(){
     FILE *f = fopen("string.txt", "r");
     Tree* tree = geraArvoreCodificacao(f);
     //imprimeTree(tree);
 
-    char** tabela = criaTabelaCodificacao(tree);
+    unsigned char** tabela = criaTabelaCodificacao(tree);
     tabela = inicializaTabelaCodificacao(tree, tabela, "");
 
     imprimeTabelaCodificacao(tabela);

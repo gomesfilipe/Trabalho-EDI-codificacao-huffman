@@ -12,7 +12,7 @@ typedef struct tree Tree;
  * @param tree Árvore que terá seu elemento capturado.
  * @return Elemento do nó raíz da árvore.
  **/
-char getElem(Tree* tree);
+unsigned char getElem(Tree* tree);
 
 /**
  * @brief Captura o peso do nó raiz de uma árvore.
@@ -20,6 +20,20 @@ char getElem(Tree* tree);
  * @return Peso do nó raíz da árvore.
  **/
 int getPeso(Tree* tree);
+
+/**
+ * @brief Captura o ponteiro para a subárvore esquerda do nó raiz de uma árvore.
+ * @param tree Árvore que terá seu ponteiro para subárvore esquerda capturado.
+ * @return Ponteiro para subárvore esquerda do nó raíz da árvore.
+ **/
+Tree* getLeft(Tree* tree);
+
+/**
+ * @brief Captura o ponteiro para a subárvore direita do nó raiz de uma árvore.
+ * @param tree Árvore que terá seu ponteiro para subárvore direita capturado.
+ * @return Ponteiro para subárvore direita do nó raíz da árvore.
+ **/
+Tree* getRight(Tree* tree);
 
 /**
  * @brief Cria uma árvore vazia.
@@ -34,7 +48,7 @@ Tree* criaVazia();
  * @param right Ponteiro para subárvore direita.
  * @return Árvore criada e inicializada.
  **/
-Tree* criaTree(char elem, int peso, Tree* left, Tree* right);
+Tree* criaTree(unsigned char elem, int peso, Tree* left, Tree* right);
 
 /**
  * @brief Libera uma árvore da memória. Essa função apenas desfaz o encadeamento da árvore.
@@ -64,16 +78,18 @@ int ehVazia(Tree* tree);
  **/
 int altura(Tree* tree);
 
+/**
+ * @brief Retorna o maior dentre dois inteiros.
+ * @param a Inteiro a ser comparado.
+ * @param b Inteiro a ser comparado.
+ * @return Maior inteiro dentre os dois.
+ **/
 int maior(int a, int b);
 
+/**
+ * @brief Imprime uma árvore de modo serializado, com a notação de símbolos '<' e '>'.
+ * @param tree Árvore que será impressa.
+ **/
 void imprimeTree(Tree* tree);
-
-char** criaTabelaCodificacao(Tree* tree);
-
-char** inicializaTabelaCodificacao(Tree* tree, char** tabela, char* caminho);
-
-void liberaTabelaCodificacao(char** tabela);
-
-void imprimeTabelaCodificacao(char** tabela);
 
 #endif /* ARVORE_H_ */

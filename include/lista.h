@@ -48,34 +48,11 @@ Tree* removeFirst(List* list);
  **/
 void imprimeLista(List* list);
 
-
-/**
- * @brief Implementa o algoritmo de huffman. Retira as duas primeiras árvores de uma lista e gera uma nova árvore até 
- * restar apenas uma árvore na lista. 
- * @param list Lista de árvores que será usada na implementação do algoritmo de huffman.
- * @return Árvore final gerada pelo algoritmo de huffman.
- **/
-Tree* huffman(List* list);
-
-/**
- * @brief Calcula a quantidade de vezes de cada caractere aparece em um arquivo. Essa quantidade chamamos de peso.
- * @param f Ponteiro que aponta para o arquivo que terá o peso de seus caracteres calculados
- * @return Vetor de inteiros. O conteúdo é o peso de cada caractere.
- **/
-int* calculaPesos(FILE *f);
-
-/**
- * @brief Gera uma lista de árvores.
- * @param pesos Vetor com o peso de cada caracter do arquivo.
- * @return Lista de árvores.
- **/
-List* geraListaTree(int* pesos);
-
-/**
- * @brief Gera a árvore de codificação huffman lendo um arquivo txt.
- * @param f Ponteiro para o arquivo que será lido.
- * @return Árvore de codificação huffman.
- **/
-Tree* geraArvoreCodificacao(FILE *f);
+ /**
+  * @brief Captura o tamanho de uma lista.
+  * @param list É a lista que terá seu tamanho capturado.
+  * @return tamanho da lista.
+  **/
+int getTam(List* list);
 
 #endif /* LISTA_H_ */

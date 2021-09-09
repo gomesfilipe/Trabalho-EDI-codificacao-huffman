@@ -15,6 +15,12 @@ struct list{
     int tam;
 };
 
+
+int getTam(List* list){
+    return list->tam;
+}
+
+
 List* criaLista(){
     List* list = (List*) malloc(sizeof(List));
     list->first = NULL;
@@ -107,51 +113,4 @@ void imprimeLista(List* list){
         printf("%d ", peso);
     }
     printf("\n");
-}
-
-Tree* huffman(List* list){
-    Tree* tree1;
-    Tree* tree2;
-    Tree* tree3;
-    int peso1, peso2;
-    while(list->tam != 1){
-        tree1 = removeFirst(list);
-        tree2 = removeFirst(list);
-        peso1 = getPeso(tree1);
-        peso2 = getPeso(tree2);
-     
-        tree3 = criaTree(0, peso1 + peso2, tree1, tree2); // Elem é 0, pois é o NULL na tabela ascii. Tree3 tem conteúdo NULL pois seu nó raíz não é uma folha.
-        insereOrdenado(list, tree3);
-    }
-
-    return tree3;
-}
-
-int* calculaPesos(FILE *f){
-    int* pesos = (int*) calloc(TAM, sizeof(int)); //Declaração do vetor de caracteres
-    char caractere;
-    while(fscanf(f, "%c", &caractere) == 1){
-        //printf("(%c) ", caractere);
-        pesos[caractere]++;
-    }
-    return pesos;
-}
-
-List* geraListaTree(int* pesos){
-    List* list = criaLista();
-    for(int i = 0; i < TAM; i++){
-        if(pesos[i] > 0){
-            insereOrdenado(list, criaTree(i, pesos[i], NULL, NULL));
-        }
-    }
-    return list;
-}
-
-Tree* geraArvoreCodificacao(FILE *f){
-    int *pesos = calculaPesos(f);
-    List* list = geraListaTree(pesos);
-    Tree* tree = huffman(list);
-    free(pesos);
-    liberaLista(list);
-    return tree;
 }
