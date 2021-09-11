@@ -92,4 +92,6 @@ int maior(int a, int b);
  **/
 void imprimeTree(Tree* tree);
 
+int qtdFolhas(Tree* tree);
+
 #endif /* ARVORE_H_ */

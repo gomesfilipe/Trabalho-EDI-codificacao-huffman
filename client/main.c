@@ -5,14 +5,28 @@
 #include "../include/arvore.h"
 #include "../include/lista.h"
 #include "../include/huffman.h"
+#include "../include/compactador.h"
+#include "../include/descompactador.h"
 
 // bom esse bombom
 #define TAM 256
 
 int main(){
+    //A = "01000001
+    // unsigned char c = 'é';
+    // unsigned char bin[8];
+    // converteDecimalParaBinario(c, bin);
+    // printf("\n\n[%s]\n\n", bin);
+    
     FILE *f = fopen("string.txt", "r");
-    Tree* tree = geraArvoreCodificacao(f);
-    //imprimeTree(tree);
+    Tree* tree = geraArvoreCodificacao(f); //gera uma arvore a partir do arquivo
+    imprimeTree(tree);
+    printf("\n\n");
+    printf("qtd folhas [%d]\n\n", qtdFolhas(tree));
+    bitmap* bm = criaBitMapCompac(tree);
+    codificaTree(tree, bm);   //codifica a arvore para gerar o cabeçalho do arquivo compactado
+    char* string = bitmapGetContents(bm);
+    printf("\n[%s]\n", string);
 
     unsigned char** tabela = criaTabelaCodificacao(tree);
     tabela = inicializaTabelaCodificacao(tree, tabela, "");
@@ -28,7 +42,8 @@ int main(){
     // }
     fclose(f);
     liberaTree(tree);
-    liberaTabelaCodificacao(tabela);
+    bitmapLibera(bm);
+    // liberaTabelaCodificacao(tabela);
     // Tree* a = criaTree('a', 2,  NULL, NULL);
     // Tree* b = criaTree('b', 17, NULL, NULL);
     // Tree* c = criaTree('c', 4, NULL, NULL);

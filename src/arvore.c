@@ -80,9 +80,23 @@ void imprimeTree(Tree* tree){
     printf(">");
 }
 
+int qtdFolhas(Tree* tree){
+    if(!ehVazia(tree)){
+        if(ehFolha(tree)){
+            return 1;
+        } else{
+            return qtdFolhas(tree->left) + qtdFolhas(tree->right);
+        }
+    }
+    return 0;
+}
+
 /** TO DO
- * Como codificar a árvore?
+ * Como codificar a árvore? Feito  11  011    110  11
+ * QTD FOLHAS NO CABEÇALHO (CONDIÇÃO DE PARADA) ******** 
+ * setar o texto codificado no bitmap e depois printar no .txt *********
+ * Criar um arquivo, imprimir o cabeçalho nele e codificar o resto com
  * codificar o .txt em bits usando o bitmap
- * criar tads descompactor.c e compactador.c
  * escrever arvore serialzada codificada no arquivo (????)
+ * ver problema dos caracteres ascii acima de 127 
 **/ 
