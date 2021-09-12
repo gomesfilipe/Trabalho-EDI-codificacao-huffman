@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "descompactador.h": "c"
+        "descompactador.h": "c",
+        "huffman.h": "c"
     }
 }
