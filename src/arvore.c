@@ -90,34 +90,3 @@ int qtdFolhas(Tree* tree){
     }
     return 0;
 }
-
-/** TO DO
- * Testar codificação da arvore com caracteres com acento, ç etc
- *codificar o texto(vamos ter q ver a condicao de parada de novo)
- * QTD FOLHAS NO CABEÇALHO (CONDIÇÃO DE PARADA) ******** 
- * setar o texto codificado no bitmap e depois printar no .txt *********
- * Criar um arquivo, imprimir o cabeçalho nele e codificar o resto com
- * codificar o .txt em bits usando o bitmap
- * escrever arvore serialzada codificada no arquivo (????)
- * ver problema dos caracteres ascii acima de 127 
-**/ 
-
-// 1010101011010
-// 32 bits
-// unsigned int 2^32 - 1        32 bits 
-
-
-/*
-
-//Abrir o arquio modo escrita
-
-//escrever o cabeçalho
-
-
-*/  // 1 bit -> leu 8 bits? leia o proximo bit. 
-// se for 1, continua a ler, se for 0, para. (le o proximo bit pra ver se é folha ou nao)
-// 00000101 0 0 1 01101101 b 1 01100010 b 0 0 1 01110011 b 1 01100101 b 0 1 00100000 b 1 01101111
-// se b == 1, acabou. pare de ler. se b == 0, continua. leia o proximo bit paa ver se é no folha ou nao
-//  '\a'
-// 00000000   00000111
-// 000 111

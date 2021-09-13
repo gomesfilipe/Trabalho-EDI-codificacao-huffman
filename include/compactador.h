@@ -55,7 +55,10 @@ bitmap* insereQtdFolhas(Tree* tree, bitmap* bm);
  **/
 bitmap* codificaTexto(FILE* f, unsigned char** tabela, int pesoArquivoBit, int pesoArquivoByte);
 
+void compacta(char* nomeArquivo);
 
-void compacta(FILE* fRead);
+void liberaTudoCompactador(int* pesos, Tree* tree, unsigned char** tabela, bitmap* bmCabecalho, bitmap* bmTexto, FILE* fRead, FILE* fWrite);
+
+void geraNomeArquivoCompac(char* nomeArquivoCompac, char* nomeArquivo);
 
 #endif /* COMPACTADOR_H_ */

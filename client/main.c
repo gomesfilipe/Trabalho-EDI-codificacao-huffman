@@ -12,21 +12,17 @@
 // bom esse bombom
 #define TAM 256
 
-int main(){
-    
-    FILE* fRead = fopen("string.txt", "r");
-    if(fRead == NULL){
-        printf("Erro na abertura do arquivo.");
-        exit(1);
-    }
-
-    // unsigned char c;
-    // fscanf(fRead, "%c", &c);
-    // printf("[%c]", c);
-
-    compacta(fRead);
-
-    fclose(fRead);
-   
+int main(int argc, char** argv){
+    compacta(argv[1]);
     return 0;
 }
+
+/** TO DO
+ * Resolver codificação da arvore com caracteres com acento, ç etc
+**/ 
+
+/** Duvidas
+ * O arquivos de entrada serão apenas txt? Ou terá png, mp3, etc?
+ * Os textos terão acentos? Pois uma parte da tabela ascii não é imprimível
+
+**/
