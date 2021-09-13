@@ -32,10 +32,10 @@ List* geraListaTree(int* pesos);
 
 /**
  * @brief Gera a árvore de codificação huffman lendo um arquivo txt.
- * @param f Ponteiro para o arquivo que será lido.
+ * @param pesos Ponteiro para vetor de pesos dos caracteres que aparecem no arquivo lido.
  * @return Árvore de codificação huffman.
  **/
-Tree* geraArvoreCodificacao(FILE *f);
+Tree* geraArvoreCodificacao(int* pesos);
 
 /**
  * @brief Cria a tabela de codificação de huffman a partir de uma árvore de huffman e a inicializa com strings vazias.
@@ -65,5 +65,13 @@ void liberaTabelaCodificacao(unsigned char** tabela);
  * @param tabela Tabela que será impressa.
  **/
 void imprimeTabelaCodificacao(unsigned char** tabela);
+
+/**
+ * @brief Calcula a quantidade de bits da codificação de um texto em bits.
+ * @param tabela Tabela de codificação dos caracteres.
+ * @param pesos Vetor de pesos dos caracteres.
+ * @return Quantidade de bits ocupada pela codificação do texto.
+ **/
+int calculaBits(unsigned char** tabela, int* pesos);
 
 #endif /* HUFFMAN_H_ */

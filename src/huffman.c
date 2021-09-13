@@ -27,6 +27,8 @@ int* calculaPesos(FILE *f){
         //printf("(%c) ", caractere);
         pesos[caractere]++;
     }
+    // colocando um espaço a mais para o caractere '\a' na lista de árvores.
+    //!pesos[7]++; // Esse caracter a mais '\a' será a condição de parada do arquivo.
     return pesos;
 }
 
@@ -40,11 +42,18 @@ List* geraListaTree(int* pesos){
     return list;
 }
 
-Tree* geraArvoreCodificacao(FILE *f){
-    int *pesos = calculaPesos(f);
+// Tree* geraArvoreCodificacao(FILE *f){
+//     int *pesos = calculaPesos(f);
+//     List* list = geraListaTree(pesos);
+//     Tree* tree = huffman(list);
+//     free(pesos);
+//     liberaLista(list);
+//     return tree;
+// }
+
+Tree* geraArvoreCodificacao(int* pesos){
     List* list = geraListaTree(pesos);
     Tree* tree = huffman(list);
-    free(pesos);
     liberaLista(list);
     return tree;
 }
@@ -101,4 +110,14 @@ void imprimeTabelaCodificacao(unsigned char** tabela){
             printf("\n %c [%s]",  i, tabela[i]);
         }
     }
+}
+
+int calculaBits(unsigned char** tabela, int* pesos){
+    int bits = 0;
+    for(int i = 0; i < TAM; i++){
+        if(pesos[i] != 0){
+            bits += pesos[i] * strlen(tabela[i]);
+        }
+    }
+    return bits;
 }

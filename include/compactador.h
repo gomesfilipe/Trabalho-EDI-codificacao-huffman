@@ -26,16 +26,17 @@ void converteDecimalParaBinario(unsigned char elem, unsigned char* bin);
 
 /**
  * @brief Inicializa um bitmap com tamanho suficiente para armazenar a codificação de uma árvore cheia.
- * @param tree Árvore que será baseada para calcular o tamanho do bitmap
- * @return Retorna o bitmap criado 
+ * @param tree Árvore que será baseada para calcular o tamanho do bitmap.
+ * @return Retorna o bitmap criado.
  **/
 bitmap* criaBitMapCompac(Tree* tree);
 
 /**
- * @brief Imprime o cabeçalho no arquivo. O cabeçalho é árvore codificada.
- * @param f Ponteiro para o arquivo no qual será escrito a árvore codificada
+ * @brief Imprime um bitmap no arquivo.
+ * @param f Ponteiro para o arquivo no qual será impresso o campo contests do bitmap.
+ * @param bm Bitmap que será escrito no arquivo.
  **/
-void imprimeCabecalho(FILE* f, bitmap* bm);
+void imprimeBitmapArquivo(FILE* f, bitmap* bm);
 
 /**
  * @brief Insere a quantidade de folhas de um árvore em um bitmap.
@@ -43,5 +44,18 @@ void imprimeCabecalho(FILE* f, bitmap* bm);
  * @return bitmap que possui a quantidade de folhas setada no campo contents.
  **/
 bitmap* insereQtdFolhas(Tree* tree, bitmap* bm);
+
+/**
+ * @brief Lê um arquivo e coloca sua codificação num bitmap.
+ * @param f Arquivo que será lido.
+ * @param tabela Tabela de codificação de cada caractere.
+ * @param pesoArquivoBit Peso do arquivo em bits.
+ * @param pesoArquivoByte Peso do arquivo em bytes.
+ * @return Bitmap preenchido e codificado.
+ **/
+bitmap* codificaTexto(FILE* f, unsigned char** tabela, int pesoArquivoBit, int pesoArquivoByte);
+
+
+void compacta(FILE* fRead);
 
 #endif /* COMPACTADOR_H_ */

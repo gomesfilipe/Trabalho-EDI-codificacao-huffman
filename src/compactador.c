@@ -75,40 +75,71 @@ bitmap* criaBitMapCompac(Tree* tree){
     return bm;
 }
 
-//printa o numero de folhas  //printa o cabeçalho
+//O peso do arquivo já vem em bits
+bitmap* codificaTexto(FILE* f, unsigned char** tabela, int pesoArquivoBit, int pesoArquivoByte){
+    bitmap* bm = bitmapInit(pesoArquivoBit); 
+    printf("peso byte [%d]\n", pesoArquivoByte);
+    unsigned char aux;
+    for(int i = 0; i < pesoArquivoByte; i++){
+        //fscanf(f, "%c", &aux);
+        fscanf(f, "%c", &aux );
+        //printf("aux [%c] ", aux);
+        //printf("[");
+        int tam = strlen(tabela[aux]) ;
+        //printf("tam [%d] ", tam);
+        for(int j = 0; j < strlen(tabela[aux]); j++){
+            bitmapAppendLeastSignificantBit(bm, tabela[aux][j]);
+            printf("%c", tabela[aux][j]);
+        }
+        //printf("] ");
+    }
+    return bm;
+}
 
-// void codificaTexto(FILE* f, char** tabela, bitmap* bm){
-//     char* text = bitmapGetContents(bm);
-//     // passando texto pro bitmap
-//     for(int i = 0; !feof(f); i++){
-//         fscanf(f, "%c", text[i]);
-//     }
-//     int maxSize = bitmapGetMaxSize(bm);
-//     bitmap* aux = bitmapInit(maxSize); // bitmap que colocará codificado
-    
-//     // ler o outro bitmap e ir codificando usando a tabela
-
-
-//     //Abrir o arquivo modo escrita
-//     //pegar o ponteiro de conxtests e jogar ele no arquivo
-
-// }
 
 //O cabeçalho é impresso junto a um possível lixo de memória que deveser tratado posteriormente 
 //na decodificação
-void imprimeCabecalho(FILE* f, bitmap* bm){
+void imprimeBitmapArquivo(FILE* f, bitmap* bm){
     char* cabecalho = bitmapGetContents(bm);
     int tam = bitmapGetLength(bm);
     tam = (tam + 7) / 8; //+ 1; // passando pra bytes, tratar lixo.
     //int restante = 8 - tam%8 ;
 
     for(int i = 0; i < tam ; i++){
-        //so printar se for menor  que 255 
-        //se for menor que 32, soma 32
         fprintf(f, "%c" , cabecalho[i]);
     }
-    
 }
 
+void compacta(FILE* fRead){
+    int* pesos = calculaPesos(fRead);
+    Tree* tree = geraArvoreCodificacao(pesos);
+    
+    unsigned char** tabela = criaTabelaCodificacao(tree);
+    tabela = inicializaTabelaCodificacao(tree, tabela, "");
+    imprimeTabelaCodificacao(tabela);
+    int pesoArquivoBit = calculaBits(tabela, pesos);
 
-//11100000 00000111 11111110 00000001 11111110 00000011 11111111 1|0000000
+    FILE* fWrite = fopen("compactado.txt", "w");
+    if(fWrite == NULL){
+        printf("Erro na abertura do arquivo!\n");
+        exit(1);
+    }
+    //Codificação do cabeçalho
+    bitmap* bmCabecalho = criaBitMapCompac(tree);
+    bmCabecalho = insereQtdFolhas(tree, bmCabecalho);
+    codificaTree(tree, bmCabecalho);
+    imprimeBitmapArquivo(fWrite, bmCabecalho);
+    
+    //Codificação do texto
+    int pesoArquivoByte = getPeso(tree);
+    rewind(fRead);
+    bitmap* bmTexto = codificaTexto(fRead, tabela, pesoArquivoBit, pesoArquivoByte);
+    imprimeBitmapArquivo(fWrite, bmTexto);
+
+    free(pesos);
+    liberaTree(tree);
+    liberaTabelaCodificacao(tabela);
+    bitmapLibera(bmCabecalho);
+    bitmapLibera(bmTexto);
+    fclose(fWrite);
+}

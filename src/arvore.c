@@ -92,7 +92,8 @@ int qtdFolhas(Tree* tree){
 }
 
 /** TO DO
- * Como codificar a árvore? Feito  11  011    110  11
+ * Testar codificação da arvore com caracteres com acento, ç etc
+ *codificar o texto(vamos ter q ver a condicao de parada de novo)
  * QTD FOLHAS NO CABEÇALHO (CONDIÇÃO DE PARADA) ******** 
  * setar o texto codificado no bitmap e depois printar no .txt *********
  * Criar um arquivo, imprimir o cabeçalho nele e codificar o resto com
