@@ -90,3 +90,18 @@ int qtdFolhas(Tree* tree){
     }
     return 0;
 }
+
+Tree* setLeft(Tree* tree, Tree* left){
+    tree->left = left;
+    return tree;
+}
+
+Tree* setRight(Tree* tree, Tree* right){
+    tree->right = right;
+    return tree;
+}
+
+Tree* setElem(Tree* tree, unsigned char elem){
+    tree->elem = elem;
+    return tree;
+}

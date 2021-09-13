@@ -131,3 +131,10 @@ void bitmapLibera (bitmap* bm){
     free (bm->contents);
     free (bm);
 }
+
+//Funcao nossa
+bitmap* bitmapSetContents(bitmap* bm, unsigned char* string){
+	strcpy(bm->contents, string);
+	bm->length = 8 * strlen(string);
+	return bm;
+}

@@ -10,3 +10,14 @@
 #include "../include/huffman.h"
 
 #endif /* DESCOMPACTADOR_H_ */
+
+/**
+* @brief Realiza a leitura do arquivo compactado.
+* @param fRComp Ponteiro para o arquivo compactado.
+* @return Ponteiro para o bitmap no qual foi setado o conteúdo que estava no arquivo compactado.
+*/
+bitmap* leArquivoCompactado(FILE *fRComp);
+
+void recriaTree(bitmap* bm, Tree* tree, int* i, int* folhas);
+
+Tree* decodificaCabecalho(bitmap* bm);

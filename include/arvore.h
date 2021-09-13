@@ -94,4 +94,10 @@ void imprimeTree(Tree* tree);
 
 int qtdFolhas(Tree* tree);
 
+Tree* setLeft(Tree* tree, Tree* left);
+
+Tree* setRight(Tree* tree, Tree* right);
+
+Tree* setElem(Tree* tree, unsigned char elem);
+
 #endif /* ARVORE_H_ */

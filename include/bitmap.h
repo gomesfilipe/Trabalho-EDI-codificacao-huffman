@@ -19,4 +19,6 @@ unsigned char bitmapGetBit(bitmap* bm, unsigned int index);
 void bitmapAppendLeastSignificantBit(bitmap* bm, unsigned char bit);
 void bitmapLibera (bitmap* bm);
 
+bitmap* bitmapSetContents(bitmap* bm, unsigned char* string);
+
 #endif /*BITMAP_H_*/
