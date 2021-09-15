@@ -12,23 +12,47 @@
 // bom esse bombom
 #define TAM 256
 
+// quando lia 'ç', tinham 2 char
+// 'ç' = 'c' + '-'
+// c vai ter uma codificacao supoe que é 101
+// '-' tbm vai ter uma codificacao 11
+// çsdjfijgfkljsdklgopfiunevun10111
+
+// TEXTO CODIFICADO
+// 01111001
+// 10101100
+// 10010111
+// 00111100
+// 01111000
+
 int main(int argc, char** argv){
     compacta(argv[1]);
 
     FILE *f = fopen("string.comp", "r");
 
     bitmap* bm = leArquivoCompactado(f);
+    printf("\n\nbitmap [");
+    decodifica(bm);
+    // for(int i = 0; i < bitmapGetLength(bm); i++){
+    //     if(i % 8 == 0){
+    //         printf("\n");
+    //     }
+    //     if(i == 72){
+    //         printf("\n");
+    //     }
+       
+    //     printf("%d", bitmapGetBit(bm, i));
+    // }
+    // printf("]\n");
 
-    Tree* tree = decodificaCabecalho(bm);
+    //Tree* tree = decodificaCabecalho(bm);
 
-    imprimeTree(tree);
-    liberaTree(tree);
-    // FILE *f = fopen("string.comp", "r");
+    //imprimeTree(tree);
 
-    // bitmap* bm = leArquivoCompactado(f);
-    // recriaTree(bm);
-    bitmapLibera(bm);
     fclose(f);   
+    //liberaTree(tree);
+    bitmapLibera(bm);
+
     return 0;
 }
 

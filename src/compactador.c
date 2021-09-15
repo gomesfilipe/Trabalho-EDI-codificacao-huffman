@@ -72,14 +72,14 @@ bitmap* criaBitMapCompac(Tree* tree){
 //O peso do arquivo já vem em bits
 bitmap* codificaTexto(FILE* f, unsigned char** tabela, int pesoArquivoBit, int pesoArquivoByte){
     bitmap* bm = bitmapInit(pesoArquivoBit); 
-    printf("peso byte [%d]\n", pesoArquivoByte);
+    //printf("peso byte [%d]\n", pesoArquivoByte);
     unsigned char aux;
     for(int i = 0; i < pesoArquivoByte; i++){
         //fscanf(f, "%c", &aux);
-        fscanf(f, "%c", &aux );
+        fscanf(f, "%c", &aux);
         //printf("aux [%c] ", aux);
         //printf("[");
-        int tam = strlen(tabela[aux]) ;
+        //int tam = strlen(tabela[aux]) ;
         //printf("tam [%d] ", tam);
         for(int j = 0; j < strlen(tabela[aux]); j++){
             bitmapAppendLeastSignificantBit(bm, tabela[aux][j]);
