@@ -1,4 +1,4 @@
-#include "huffman.h"
+#include "../include/huffman.h"
 
 #define TAM 256
 

@@ -1,14 +1,27 @@
-#include "descompactador.h"
-#include "compactador.h" //!TIRAR DEPOIS
+#include "../include/descompactador.h"
+#include "../include/compactador.h" //!TIRAR DEPOIS
 #include <math.h>
 
 #define TAM 500
 
-bitmap* leArquivoCompactado(FILE *fRComp){
+bitmap* leArquivoCompactado(FILE* fRComp){
     int tam = TAM;
     char* str = (char*) malloc (tam * sizeof (char));
     
-    for(int i = 0 ; !feof(fRComp) ; i++){
+    // for(int i = 0 ; !feof(fRComp) ; i++){
+    //     fscanf(fRComp, "%c" , &str[i]);
+    //     str[i + 1] = '\0';
+    //     if(i == tam - 2){ //Se chegou no final da string e o arquivo ainda não foi lido por completo, é preciso aumentar o tamanho da string
+    //         tam += TAM;
+    //         str = (char*) realloc(str, tam * sizeof(char));
+    //     }
+    // }
+    int i;
+    for(i = 0 ; !feof(fRComp); i++){
+        //if(!feof(fRComp)){
+            //str[i] = fgetc(fRComp);
+            //break;
+       // }
         fscanf(fRComp, "%c" , &str[i]);
         str[i + 1] = '\0';
         if(i == tam - 2){ //Se chegou no final da string e o arquivo ainda não foi lido por completo, é preciso aumentar o tamanho da string
@@ -16,8 +29,10 @@ bitmap* leArquivoCompactado(FILE *fRComp){
             str = (char*) realloc(str, tam * sizeof(char));
         }
     }
-    
-    bitmap* bm = bitmapInit(8 * strlen(str) + 8); // Multiplicamos por 8 para converter para bits
+
+    printf("\nlen [%d]\nstrlen [%ld]\n", i, strlen(str)); //!
+    bitmap* bm = bitmapInit(8 * strlen(str) + 8 ); // Multiplicamos por 8 para converter para bits
+    //+3 por causa do lixo do texto
     // char* contents = bitmapGetContents(bm);
     // strcpy(contents, str);
     // FILE* f = fopen("teste.txt", "w");
@@ -114,27 +129,34 @@ void recriaTree(bitmap* bm, Tree* tree, int* i, int* folhas, int* lixo){
 // }
 
 void decodifica(bitmap* bm){
-    int i = 8;
+    int i = 11;
+    // int i = 8;
     int folhas = 0;
-    int lixo = 0;
+    int lixoCabecalho = 3; // inicializado com 3 pois os 3 primeiros vits do segundo byte é o tamanho do lixo do texto.
+    int lixoTexto = getLixoTexto(bm);
+    
     Tree* tree = criaTree(0, -1, NULL, NULL);
 
-    recriaTree(bm, tree, &i, &folhas, &lixo);
+    recriaTree(bm, tree, &i, &folhas, &lixoCabecalho);
 
     printf("i: [%d]  ", i);
     printf("folhas: [%d]  ", folhas);
-    printf("lixo:[%d]\n", lixo);
+    printf("lixo cabecalho:[%d]\n", lixoCabecalho);
 
-    decodificaTexto( bm, &i,  tree);
+    decodificaTexto( bm, &i,  tree, lixoTexto);
     liberaTree(tree);
     //return tree;
 }
 
-void decodificaTexto(bitmap* bm, int* i, Tree* tree){
+void decodificaTexto(bitmap* bm, int* i, Tree* tree, int lixoTexto){
     Tree* aux = tree;
     FILE* fWrite = fopen("decodificado.txt", "w");
+    if(fWrite == NULL){
+        printf("Erro na abertura do arquivo!\n");
+        exit(1);
+    }
 
-    for(*i; *i < bitmapGetLength(bm); (*i)++){
+    for( (*i) ; (*i) < bitmapGetLength(bm) -lixoTexto  ; (*i)++){ //acho q tem tirar o lixo aqui e colocar le como paramentro
         
         if(bitmapGetBit(bm, *i) == 0){
             aux = getLeft(aux); // pegando ponteiro pra árvore filha esquerda
@@ -157,6 +179,15 @@ void decodificaTexto(bitmap* bm, int* i, Tree* tree){
 // 10010111
 // 00111100
 // 01111000
+
+int getLixoTexto(bitmap* bm){
+    char lixo[3];
+    lixo[0] = bitmapGetBit(bm, 8); // Pegando bits 8, 9 e 10 do cabeçalho, nos quais estão o lixo do texto.
+    lixo[1] = bitmapGetBit(bm, 9);
+    lixo[2] = bitmapGetBit(bm,10);
+
+    return (lixo[0] << 2) + (lixo[1] << 1) + lixo[2];
+}
 
 
 

@@ -20,6 +20,8 @@ bitmap* leArquivoCompactado(FILE *fRComp);
 
 void recriaTree(bitmap* bm, Tree* tree, int* i, int* folhas, int* lixo);
 
-void decodificaTexto(bitmap* bm, int* i, Tree* tree);
+void decodificaTexto(bitmap* bm, int* i, Tree* tree, int lixoTexto);
 
 void decodifica(bitmap* bm);
+
+int getLixoTexto(bitmap* bm);

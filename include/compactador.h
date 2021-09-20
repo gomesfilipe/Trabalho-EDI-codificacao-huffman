@@ -61,4 +61,10 @@ void liberaTudoCompactador(int* pesos, Tree* tree, unsigned char** tabela, bitma
 
 void geraNomeArquivoCompac(char* nomeArquivoCompac, char* nomeArquivo);
 
+int calculaLixoTexto(int pesoArquivoBits);
+
+bitmap* insereLixoTexto(int pesoArquivoBits, bitmap* bm);
+
+
+
 #endif /* COMPACTADOR_H_ */
