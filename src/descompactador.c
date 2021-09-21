@@ -6,33 +6,30 @@
 
 bitmap* leArquivoCompactado(FILE* fRComp){
     int tam = TAM;
-    char* str = (char*) malloc (tam * sizeof (char));
-    
-    // for(int i = 0 ; !feof(fRComp) ; i++){
-    //     fscanf(fRComp, "%c" , &str[i]);
-    //     str[i + 1] = '\0';
-    //     if(i == tam - 2){ //Se chegou no final da string e o arquivo ainda não foi lido por completo, é preciso aumentar o tamanho da string
-    //         tam += TAM;
-    //         str = (char*) realloc(str, tam * sizeof(char));
-    //     }
-    // }
+    char* str = (char*) malloc (tam * sizeof (char)); // 499 caracteres + \0
+                                                      // strlen n              i n+2
     int i;
-    for(i = 0 ; !feof(fRComp); i++){
-        //if(!feof(fRComp)){
-            //str[i] = fgetc(fRComp);
-            //break;
-       // }
+    for(i = 0 ; ; i++){
         fscanf(fRComp, "%c" , &str[i]);
-        str[i + 1] = '\0';
-        if(i == tam - 2){ //Se chegou no final da string e o arquivo ainda não foi lido por completo, é preciso aumentar o tamanho da string
+        if(feof(fRComp)){
+            break;
+        }
+        //printf("str[%d]: [%c]\n", i, str[i]);
+        //if(str[i] != '\0'){
+            //printf("entrou aqui\n");
+            //str[i + 1] = '\0';
+       // }//i ta dando 323 e strlen ta dando 322
+        if(i == tam - 1){ //Se chegou no final da string e o arquivo ainda não foi lido por completo, é preciso aumentar o tamanho da string
             tam += TAM;
             str = (char*) realloc(str, tam * sizeof(char));
         }
     }
+    str[i] = '\0';
+    printf("\ni [%d]\nstrlen [%ld]\n", i, strlen(str)); //!
 
-    printf("\nlen [%d]\nstrlen [%ld]\n", i, strlen(str)); //!
-    bitmap* bm = bitmapInit(8 * strlen(str) + 8 ); // Multiplicamos por 8 para converter para bits
+    bitmap* bm = bitmapInit(8 * strlen(str) + 8); // Multiplicamos por 8 para converter para bits e soma 8 para o \0.
     //+3 por causa do lixo do texto
+ 
     // char* contents = bitmapGetContents(bm);
     // strcpy(contents, str);
     // FILE* f = fopen("teste.txt", "w");
@@ -41,6 +38,9 @@ bitmap* leArquivoCompactado(FILE* fRComp){
     //     exit(1);
     // }
     bm = bitmapSetContents(bm, str);
+
+    unsigned int tamLength = bitmapGetLength(bm);
+    printf("\nTamLenght: %d\n", tamLength/8);
     //imprimeBitmapArquivo(f, bm);
     //bitmapLibera(bm);
     free(str);
@@ -118,9 +118,9 @@ void decodifica(bitmap* bm){
 
     recriaTree(bm, tree, &i, &folhas, &lixoCabecalho);
 
-    printf("i: [%d]  ", i); //!
-    printf("folhas: [%d]  ", folhas); //!
-    printf("lixo cabecalho:[%d]\n", lixoCabecalho); //!
+    // printf("i: [%d]  ", i); //!
+    // printf("folhas: [%d]  ", folhas); //!
+    // printf("lixo cabecalho:[%d]\n", lixoCabecalho); //!
 
     decodificaTexto( bm, &i,  tree, lixoTexto);
     liberaTree(tree);
@@ -134,7 +134,7 @@ void decodificaTexto(bitmap* bm, int* i, Tree* tree, int lixoTexto){
         exit(1);
     }
 
-    for( (*i) ; (*i) < bitmapGetLength(bm) -lixoTexto  ; (*i)++){ //acho q tem tirar o lixo aqui e colocar le como paramentro
+    for( (*i) ; (*i) < bitmapGetLength(bm) - lixoTexto; (*i)++){ //acho q tem tirar o lixo aqui e colocar le como paramentro
         
         if(bitmapGetBit(bm, *i) == 0){
             aux = getLeft(aux); // pegando ponteiro pra árvore filha esquerda
