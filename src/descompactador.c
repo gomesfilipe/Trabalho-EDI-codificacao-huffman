@@ -48,27 +48,6 @@ bitmap* leArquivoCompactado(FILE* fRComp){
     return bm;
 }
 
-// 01001000|00101101|111 00000
-// |00000101|00101101|10110110|00100010|11100111|01100101|01001000|00101101|11100000|
-// i: [67]  folhas: [6]  lixo:[59]
-//lixo verdadeiro é 5
-//lixo é pra ser 5
-//folhas é pra ser 6
-//i é pra ser 72
-
-/**
- * pré condição: tree deve ser uma árvore inicializada.
- * 
- * i representa i-ésima posição do bitmap (conteúdo de i) (ele é ponteiro para 
- * que seu valor atual seja acessado em qualquer nível de recursão). Além disso,
- * i deve ser inicializado com o valor 8 para começar a varredura do bitmap a 
- * partir do oitavo bit.
- * 
- * folhas representa a quantidade atual de folhas lidas (conteúdo de folhas)
- * (ele é ponteiro para que seu valor atual seja acessado em qualquer nível de recursão)
- * 
- * 
- **/
 void recriaTree(bitmap* bm, Tree* tree, int* i, int* folhas, int* lixo){
     char bit;
     int posAscii = 0;
@@ -139,13 +118,12 @@ void decodifica(bitmap* bm){
 
     recriaTree(bm, tree, &i, &folhas, &lixoCabecalho);
 
-    printf("i: [%d]  ", i);
-    printf("folhas: [%d]  ", folhas);
-    printf("lixo cabecalho:[%d]\n", lixoCabecalho);
+    printf("i: [%d]  ", i); //!
+    printf("folhas: [%d]  ", folhas); //!
+    printf("lixo cabecalho:[%d]\n", lixoCabecalho); //!
 
     decodificaTexto( bm, &i,  tree, lixoTexto);
     liberaTree(tree);
-    //return tree;
 }
 
 void decodificaTexto(bitmap* bm, int* i, Tree* tree, int lixoTexto){
@@ -171,15 +149,6 @@ void decodificaTexto(bitmap* bm, int* i, Tree* tree, int lixoTexto){
     fclose(fWrite);
 }
 
-//101
-
-// TEXTO CODIFICADO
-// 01111001
-// 10101100
-// 10010111
-// 00111100
-// 01111000
-
 int getLixoTexto(bitmap* bm){
     char lixo[3];
     lixo[0] = bitmapGetBit(bm, 8); // Pegando bits 8, 9 e 10 do cabeçalho, nos quais estão o lixo do texto.
@@ -188,7 +157,3 @@ int getLixoTexto(bitmap* bm){
 
     return (lixo[0] << 2) + (lixo[1] << 1) + lixo[2];
 }
-
-
-
-

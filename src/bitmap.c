@@ -132,7 +132,9 @@ void bitmapLibera (bitmap* bm){
     free (bm);
 }
 
-//Funcao nossa
+/*
+	***Created by Filipe Gomes and Elaine Dias***
+*/
 bitmap* bitmapSetContents(bitmap* bm, unsigned char* string){
 	strcpy(bm->contents, string);
 	bm->length = 8 * strlen(string); 

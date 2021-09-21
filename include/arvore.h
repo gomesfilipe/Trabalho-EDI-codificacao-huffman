@@ -92,12 +92,35 @@ int maior(int a, int b);
  **/
 void imprimeTree(Tree* tree);
 
+/**
+ * @brief Calcula a quantidade de folhas de uma árvore.
+ * @param tree Árvore que terá suas folhas calculadas
+ * @return Número de folhas da árvore.
+ **/
 int qtdFolhas(Tree* tree);
 
+/**
+ * @brief Insere em uma árvore uma sub-árvore esquerda.
+ * @param tree Árvore que terá seu ponteiro para sub-árvore esquerda atualizado.
+ * @param left Sub-árvore que será inserida na árvore.
+ * @return Árvore com sub-árvore esquerda encadeada.
+ **/
 Tree* setLeft(Tree* tree, Tree* left);
 
+/**
+ * @brief Insere em uma árvore uma sub-árvore direita.
+ * @param tree Árvore que terá seu ponteiro para sub-árvore direita atualizado.
+ * @param left Sub-árvore que será inserida na árvore.
+ * @return Árvore com sub-árvore direita encadeada.
+ **/
 Tree* setRight(Tree* tree, Tree* right);
 
+/**
+ * @brief Atualiza o campo elem do nó raíz de uma árvore.
+ * @param tree Árvore que terá o campo elem de seu nó raiz atualizado.
+ * @param elem Caractere que será inserido no nó raiz da árvore.
+ * @return Árvore atualizada.
+ **/
 Tree* setElem(Tree* tree, unsigned char elem);
 
 #endif /* ARVORE_H_ */

@@ -55,16 +55,47 @@ bitmap* insereQtdFolhas(Tree* tree, bitmap* bm);
  **/
 bitmap* codificaTexto(FILE* f, unsigned char** tabela, int pesoArquivoBit, int pesoArquivoByte);
 
+/**
+ * @brief Funçao princiapl na compactação de um arquivo.
+ * Essa função chama várias outras funções a fim de fazer a compactação.
+ * @param nomeArquivo Ponteiro para o arquivo que será compactado.
+ **/
 void compacta(char* nomeArquivo);
 
+/**
+ * @brief Libera da memória tudo o que foi usado para a compactação do arquivo.
+ * @param pesos É o vetor de pesos dos caracteres.
+ * @param tree É a árvore de codificação.
+ * @param tabela Tabela que contém a codificação de cada caractere.
+ * @param bmCabecalho É o bitmap onde foi armazenado o cabeçalho do texto
+ * @param bmTexto É o bitmap onde foi armazenado o texto.
+ * @param fRead Ponteiro para o arquivo de leitura que foi compactado e que agora será liberado da memória.
+ * @param fWrite Ponteiro para o arquivo no qual escrevemos o arquivo compactado
+ **/
 void liberaTudoCompactador(int* pesos, Tree* tree, unsigned char** tabela, bitmap* bmCabecalho, bitmap* bmTexto, FILE* fRead, FILE* fWrite);
 
+/**
+ * @brief Preenche uma string com o nome do arquivo compactado. Na prática,
+ * essa função concatena o nome do arquivo que será codificado com ".comp".
+ * @param nomeArquivoCompac Ponteiro para string que terá o nome do arquivo .comp.
+ * @param nomeArquivo Ponteiro para nome do arquivo que será compactado
+ **/
 void geraNomeArquivoCompac(char* nomeArquivoCompac, char* nomeArquivo);
 
+/**
+ * @brief Calcula o tamanho do lixo do trecho de texto codificado. 
+ * (Vê quantos bits falta para a quantidade de bits ser múltipla de 8).
+ * @param pesoArquivoBits Quantidade de bits do texto codificado.
+ * @return Tamanho do lixo do trecho de texto codificado.
+ **/
 int calculaLixoTexto(int pesoArquivoBits);
 
+/**
+ * @brief Insere no cabeçalho a quantidade de lixo do texto codificado 
+ * @param pesoArquivoBits Quantidade de bits do texto codificado.
+ * @param bm Bitmap que está recebendo a codificação do cabeçalho.
+ * @return Bitmap atualizado.
+ **/
 bitmap* insereLixoTexto(int pesoArquivoBits, bitmap* bm);
-
-
 
 #endif /* COMPACTADOR_H_ */
