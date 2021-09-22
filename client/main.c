@@ -53,10 +53,9 @@ int main(int argc, unsigned char** argv){
 }
 
 /** TO DO
- * Corrigr função set que fizemos no bitmap
- * Recalcular o tamanho do bitmap na decodificação
- * Ver o caso do realloc
- * Criar o arquivo com o titulo tirando o .comp
+ * Corrigr função set que fizemos no bitmap OK [ELIMINAMOS ELA, APAGAR ESSA FUNÇÃO!!!, FAZER A OUTRA Q SETA BITS.]
+ * Entrada com único caractere
+ * Mudar o código na abertura de arquivo, está hardcodado
  * Separar em dois programas: um que só compacta e outro que só descompacta
  * Ajeitar makefile por causa dessa separação
  * Relatório
