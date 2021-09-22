@@ -6,7 +6,7 @@ bitmap* insereQtdFolhas(Tree* tree, bitmap* bm){
     int folhas = qtdFolhas(tree);
     folhas--; // decrementando para caber em 8 bits
     unsigned char folhasAux = (unsigned char) folhas;
-    char c;
+    unsigned char c;
     converteDecimalParaBinario(folhasAux, binFolhas);
     //printf("%s ", binFolhas);
     
@@ -79,7 +79,7 @@ void converteDecimalParaBinario(unsigned char elem, unsigned char* bin){
 
 bitmap* criaBitMapCompac(Tree* tree){
     int h = altura(tree);
-    int maxSize = pow(2, h + 1) - 1 + 8 * pow(2, h) + 9;
+    int maxSize = pow(2, h + 1) - 1 + 8 * pow(2, h) + 8 + 3; //! trocar o +8 pra +9 dependendo
     //[2^(h+1) - 1] é o máxima número de nós da árvore
     // [8 * 2^h] é o máximo espaço em bits ocupado por cada caractere em um nó folha.
     //+ 9 é devido ao número de folhas que colocamos no início do bitmap a fim de ter uma condição de parada
@@ -111,7 +111,7 @@ bitmap* codificaTexto(FILE* f, unsigned char** tabela, int pesoArquivoBit, int p
 //O cabeçalho é impresso junto a um possível lixo de memória que deveser tratado posteriormente 
 //na decodificação
 void imprimeBitmapArquivo(FILE* f, bitmap* bm){
-    char* cabecalho = bitmapGetContents(bm);
+    unsigned char* cabecalho = bitmapGetContents(bm);
     int tam = bitmapGetLength(bm);
     tam = (tam + 7) / 8; //+ 1; // passando pra bytes, tratar lixo.
     //int restante = 8 - tam%8 ;
@@ -121,7 +121,7 @@ void imprimeBitmapArquivo(FILE* f, bitmap* bm){
     }
 }
 
-void compacta(char* nomeArquivo){
+void compacta(unsigned char* nomeArquivo){
     FILE* fRead  = fopen(nomeArquivo, "r");
     if(fRead == NULL){
         printf("Erro na abertura do arquivo!\n");
@@ -135,7 +135,7 @@ void compacta(char* nomeArquivo){
     imprimeTabelaCodificacao(tabela); //!
     int pesoArquivoBit = calculaBits(tabela, pesos);
 
-    char nomeArquivoCompac[strlen(nomeArquivo) + 4];
+    unsigned char nomeArquivoCompac[strlen(nomeArquivo) + 4];
     geraNomeArquivoCompac(nomeArquivoCompac, nomeArquivo);
     
 
@@ -146,16 +146,22 @@ void compacta(char* nomeArquivo){
     }
 
     //Codificação do cabeçalho
+    printf("chegou antes bm cabecalho\n");
     bitmap* bmCabecalho = criaBitMapCompac(tree);
+    printf("chegou depois bm cabecalho\n");
+    
     bmCabecalho = insereQtdFolhas(tree, bmCabecalho);
     bmCabecalho = insereLixoTexto(pesoArquivoBit, bmCabecalho);
     codificaTree(tree, bmCabecalho);
-    imprimeBitmapArquivo(fWrite, bmCabecalho);
+    imprimeBitmapArquivo(fWrite, bmCabecalho); 
     
     //Codificação do texto
     int pesoArquivoByte = getPeso(tree);
     rewind(fRead);
+    
+    printf("chegou antes bm texto\n");
     bitmap* bmTexto = codificaTexto(fRead, tabela, pesoArquivoBit, pesoArquivoByte);
+    printf("chegou depois bm texto\n");
     imprimeBitmapArquivo(fWrite, bmTexto);
 
     liberaTudoCompactador(pesos, tree, tabela, bmCabecalho, bmTexto, fRead, fWrite);
@@ -182,7 +188,7 @@ void liberaTudoCompactador(int* pesos, Tree* tree, unsigned char** tabela, bitma
 //     strcat(nomeArquivoCompac, ".comp");
 // }
 
-void geraNomeArquivoCompac(char* nomeArquivoCompac, char* nomeArquivo){
+void geraNomeArquivoCompac(unsigned char* nomeArquivoCompac, unsigned char* nomeArquivo){
     strcpy(nomeArquivoCompac, nomeArquivo);
     // for(int i = strlen(nomeArquivoCompac) - 1 ; i >= 0 ; i--){
     //     if(nomeArquivoCompac[i] == '.'){

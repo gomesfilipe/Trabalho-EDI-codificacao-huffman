@@ -10,7 +10,7 @@
 
 #define TAM 256
 
-int main(int argc, char** argv){
+int main(int argc, unsigned char** argv){
     // unsigned char* string = (char*) malloc(50 * sizeof(char));
     // FILE *f = fopen("teste.txt", "r");
 
@@ -34,15 +34,16 @@ int main(int argc, char** argv){
     // free(string);
     
     compacta(argv[1]);
+    printf("chega dps da compacta\n");
 
-    FILE *f = fopen("string.txt.comp", "r");
+    FILE *f = fopen("fotinha.jpg.comp", "r");
     if(f == NULL){
         printf("Erro na abertura do arquivo.\n");
         exit(1);
     }
 
     bitmap* bm = leArquivoCompactado(f);
- 
+    printf("entrou decodifica na main\n");
     decodifica(bm);
 
     fclose(f);   

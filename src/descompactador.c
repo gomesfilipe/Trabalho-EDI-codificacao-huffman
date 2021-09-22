@@ -6,50 +6,35 @@
 
 bitmap* leArquivoCompactado(FILE* fRComp){
     int tam = TAM;
-    char* str = (char*) malloc (tam * sizeof (char)); // 499 caracteres + \0
+    unsigned char* str = (unsigned char*) malloc (tam * sizeof(unsigned char)); // 499 caracteres + \0
                                                       // strlen n              i n+2
     int i;
     for(i = 0 ; ; i++){
+        //printf("i qtd: %d\n", i);
         fscanf(fRComp, "%c" , &str[i]);
         if(feof(fRComp)){
             break;
         }
-        //printf("str[%d]: [%c]\n", i, str[i]);
-        //if(str[i] != '\0'){
-            //printf("entrou aqui\n");
-            //str[i + 1] = '\0';
-       // }//i ta dando 323 e strlen ta dando 322
         if(i == tam - 1){ //Se chegou no final da string e o arquivo ainda não foi lido por completo, é preciso aumentar o tamanho da string
             tam += TAM;
-            str = (char*) realloc(str, tam * sizeof(char));
+            str = (unsigned char*) realloc(str, tam * sizeof(unsigned char));
         }
     }
     str[i] = '\0';
-    printf("\ni [%d]\nstrlen [%ld]\n", i, strlen(str)); //!
-
-    bitmap* bm = bitmapInit(8 * strlen(str) + 8); // Multiplicamos por 8 para converter para bits e soma 8 para o \0.
-    //+3 por causa do lixo do texto
- 
-    // char* contents = bitmapGetContents(bm);
-    // strcpy(contents, str);
-    // FILE* f = fopen("teste.txt", "w");
-    // if(f == NULL){
-    //     printf("erro aberturs\n");
-    //     exit(1);
-    // }
-    bm = bitmapSetContents(bm, str);
-
+    bitmap* bm = bitmapInit(8 * i + 8); // Multiplicamos por 8 para converter para bits e soma 8 para o \0.
+    //Setando a string no campo contests do bitmap
+    for(int j = 0; j < i; j++){
+        for(int k = 7; k >= 0; k--){
+            bitmapAppendLeastSignificantBit(bm, (str[j] >> k) & 1);
+        }
+    }
     unsigned int tamLength = bitmapGetLength(bm);
-    printf("\nTamLenght: %d\n", tamLength/8);
-    //imprimeBitmapArquivo(f, bm);
-    //bitmapLibera(bm);
     free(str);
-    //fclose(f);
     return bm;
 }
 
 void recriaTree(bitmap* bm, Tree* tree, int* i, int* folhas, int* lixo){
-    char bit;
+    unsigned char bit;
     int posAscii = 0;
     //static int* lixo = 0;
     int totalFolhas = bitmapGetContents(bm)[0] + 1; //Somamos 1 pois na hora de codificar tínhamos 
@@ -111,13 +96,14 @@ void decodifica(bitmap* bm){
     int i = 11;
     // int i = 8;
     int folhas = 0;
-    int lixoCabecalho = 3; // inicializado com 3 pois os 3 primeiros vits do segundo byte é o tamanho do lixo do texto.
+    int lixoCabecalho = 3; // inicializado com 3 pois os 3 primeiros bits do segundo byte é o tamanho do lixo do texto.
     int lixoTexto = getLixoTexto(bm);
     
     Tree* tree = criaTree(0, -1, NULL, NULL);
 
     recriaTree(bm, tree, &i, &folhas, &lixoCabecalho);
-
+    printf("arvore recriada:\n\n");
+    imprimeTree(tree);
     // printf("i: [%d]  ", i); //!
     // printf("folhas: [%d]  ", folhas); //!
     // printf("lixo cabecalho:[%d]\n", lixoCabecalho); //!
@@ -128,12 +114,12 @@ void decodifica(bitmap* bm){
 
 void decodificaTexto(bitmap* bm, int* i, Tree* tree, int lixoTexto){
     Tree* aux = tree;
-    FILE* fWrite = fopen("decodificado.txt", "w");
+    FILE* fWrite = fopen("decodificadofoto.jpg", "w");
     if(fWrite == NULL){
         printf("Erro na abertura do arquivo!\n");
         exit(1);
     }
-
+    printf("lixo texto: [%d]\n", lixoTexto);
     for( (*i) ; (*i) < bitmapGetLength(bm) - lixoTexto; (*i)++){ //acho q tem tirar o lixo aqui e colocar le como paramentro
         
         if(bitmapGetBit(bm, *i) == 0){
@@ -150,7 +136,7 @@ void decodificaTexto(bitmap* bm, int* i, Tree* tree, int lixoTexto){
 }
 
 int getLixoTexto(bitmap* bm){
-    char lixo[3];
+    unsigned char lixo[3];
     lixo[0] = bitmapGetBit(bm, 8); // Pegando bits 8, 9 e 10 do cabeçalho, nos quais estão o lixo do texto.
     lixo[1] = bitmapGetBit(bm, 9);
     lixo[2] = bitmapGetBit(bm,10);

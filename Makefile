@@ -42,7 +42,7 @@ clean: # Remove pasta com os arquivos objeto.
 	-rm -f $(TARGET)
 
 run: # Executa o programa com valgrind.
-	valgrind ./$(TARGET) string.txt
+	valgrind ./$(TARGET) fotinha.jpg
 #	./$(TARGET)
 
 reset: # Remove todo o conteúdo da pasta.

@@ -138,5 +138,12 @@ void bitmapLibera (bitmap* bm){
 bitmap* bitmapSetContents(bitmap* bm, unsigned char* string){
 	strcpy(bm->contents, string);
 	bm->length = 8 * strlen(string); 
+	// for(int i = 0; i < strlen(string); i++){
+	// 	bm->contents[i] = string[i];
+	// 	bm->length += 8;
+	// }
+	printf("\ntamanho pelo for [%d]\n", bm->length);
+	printf("\ntamanho pelo nosso calculo [%ld]\n", 8 * strlen(string));
+	printf("\ntamanho pelo campo [%ld]\n", 8 * strlen(bm->contents));
 	return bm;
 }

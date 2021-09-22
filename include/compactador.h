@@ -60,7 +60,7 @@ bitmap* codificaTexto(FILE* f, unsigned char** tabela, int pesoArquivoBit, int p
  * Essa função chama várias outras funções a fim de fazer a compactação.
  * @param nomeArquivo Ponteiro para o arquivo que será compactado.
  **/
-void compacta(char* nomeArquivo);
+void compacta(unsigned char* nomeArquivo);
 
 /**
  * @brief Libera da memória tudo o que foi usado para a compactação do arquivo.
@@ -80,7 +80,7 @@ void liberaTudoCompactador(int* pesos, Tree* tree, unsigned char** tabela, bitma
  * @param nomeArquivoCompac Ponteiro para string que terá o nome do arquivo .comp.
  * @param nomeArquivo Ponteiro para nome do arquivo que será compactado
  **/
-void geraNomeArquivoCompac(char* nomeArquivoCompac, char* nomeArquivo);
+void geraNomeArquivoCompac(unsigned char* nomeArquivoCompac, unsigned char* nomeArquivo);
 
 /**
  * @brief Calcula o tamanho do lixo do trecho de texto codificado. 

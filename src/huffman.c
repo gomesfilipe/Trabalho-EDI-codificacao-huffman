@@ -55,6 +55,9 @@ Tree* geraArvoreCodificacao(int* pesos){
     List* list = geraListaTree(pesos);
     Tree* tree = huffman(list);
     liberaLista(list);
+    printf("\narvore de compactacao:\n\n"); 
+    imprimeTree(tree);
+    printf("\n\n");
     return tree;
 }
 
