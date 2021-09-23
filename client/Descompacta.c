@@ -8,6 +8,6 @@
 #include "../include/descompactador.h"
 
 int main(int argc, unsigned char** argv){
-    descompacta(argv[1]);
+    descompacta(argv[1]); // data/arquivo.formato.comp
     return 0;
 }
