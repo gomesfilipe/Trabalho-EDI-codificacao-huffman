@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../include/arvore.h"
-#include "../include/lista.h"
+#include "../include/tree.h"
+#include "../include/list.h"
 #include "../include/bitmap.h"
 
 /**

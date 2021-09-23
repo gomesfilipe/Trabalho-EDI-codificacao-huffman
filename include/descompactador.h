@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../include/arvore.h"
-#include "../include/lista.h"
+#include "../include/tree.h"
+#include "../include/list.h"
 #include "../include/bitmap.h"
 #include "../include/huffman.h"
 
@@ -56,3 +56,17 @@ void decodifica(bitmap* bm);
  * @return Tamanho do lixo do texto.
  **/
 int getLixoTexto(bitmap* bm);
+
+/**
+ * @brief Gera um bitmap codificado a partir de uma string com o conteúdo a ser setado nele.
+ * @param str String com o conteúdo que será setado no bitmap.
+ * @param tam tamanho da string.
+ * @return Bitmap criado e inicializado.
+ **/
+bitmap* recuperaBitmap(unsigned char* str, int tam);
+
+/**
+ * @brief Descompacta um arquivo que foi compactado com a codificação de huffman.
+ * @param nomeArquivoCompactado Nome do arquivo compactado com a codificação de huffman.
+ **/
+void descompacta(char* nomeArquivoCompactado);

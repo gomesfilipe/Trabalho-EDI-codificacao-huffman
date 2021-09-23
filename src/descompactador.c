@@ -1,15 +1,12 @@
 #include "../include/descompactador.h"
-#include "../include/compactador.h" //!TIRAR DEPOIS
-#include <math.h>
 
 #define TAM 500
 
 bitmap* leArquivoCompactado(FILE* fRComp){
     int tam = TAM;
     unsigned char* str = (unsigned char*) malloc (tam * sizeof(unsigned char)); // 499 caracteres + \0
-                                                      // strlen n              i n+2
     int i;
-    for(i = 0 ; ; i++){
+    for(i = 0; ; i++){
         //printf("i qtd: %d\n", i);
         fscanf(fRComp, "%c" , &str[i]);
         if(feof(fRComp)){
@@ -21,14 +18,15 @@ bitmap* leArquivoCompactado(FILE* fRComp){
         }
     }
     str[i] = '\0';
-    bitmap* bm = bitmapInit(8 * i + 8); // Multiplicamos por 8 para converter para bits e soma 8 para o \0.
-    //Setando a string no campo contests do bitmap
-    for(int j = 0; j < i; j++){
-        for(int k = 7; k >= 0; k--){
-            bitmapAppendLeastSignificantBit(bm, (str[j] >> k) & 1);
-        }
-    }
-    unsigned int tamLength = bitmapGetLength(bm);
+    // bitmap* bm = bitmapInit(8 * i + 8); // Multiplicamos por 8 para converter para bits e soma 8 para o \0.
+    // //Setando a string no campo contests do bitmap
+    // for(int j = 0; j < i; j++){
+    //     for(int k = 7; k >= 0; k--){
+    //         bitmapAppendLeastSignificantBit(bm, (str[j] >> k) & 1);
+    //     }
+    // }
+    bitmap* bm = recuperaBitmap(str, i);
+    //unsigned int tamLength = bitmapGetLength(bm);
     free(str);
     return bm;
 }
@@ -114,7 +112,7 @@ void decodifica(bitmap* bm){
 
 void decodificaTexto(bitmap* bm, int* i, Tree* tree, int lixoTexto){
     Tree* aux = tree;
-    FILE* fWrite = fopen("decodificadofoto.jpg", "w");
+    FILE* fWrite = fopen("data/musicadecodificada.mp3", "w");
     if(fWrite == NULL){
         printf("Erro na abertura do arquivo!\n");
         exit(1);
@@ -142,4 +140,27 @@ int getLixoTexto(bitmap* bm){
     lixo[2] = bitmapGetBit(bm,10);
 
     return (lixo[0] << 2) + (lixo[1] << 1) + lixo[2];
+}
+
+bitmap* recuperaBitmap(unsigned char* str, int tam){
+    bitmap* bm = bitmapInit(8 * tam + 8); // Multiplicamos por 8 para converter para bits e soma 8 para o \0.
+    //Setando a string no campo contests do bitmap
+    for(int j = 0; j < tam; j++){
+        for(int k = 7; k >= 0; k--){
+            bitmapAppendLeastSignificantBit(bm, (str[j] >> k) & 1);
+        }
+    }
+    return bm;
+}
+
+void descompacta(char* nomeArquivoCompactado){
+    FILE *f = fopen(nomeArquivoCompactado, "r");
+    if(f == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+    bitmap* bm = leArquivoCompactado(f);
+    decodifica(bm);
+    fclose(f);   
+    bitmapLibera(bm);
 }
