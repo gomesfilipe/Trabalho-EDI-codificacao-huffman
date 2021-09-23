@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "../include/tree.h"
 #include "../include/list.h"
 #include "../include/bitmap.h"

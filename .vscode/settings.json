@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "bitmap.h": "c",
-        "string.h": "c",
-        "huffman.h": "c"
-    }
-}

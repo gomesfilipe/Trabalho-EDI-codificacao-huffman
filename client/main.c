@@ -11,30 +11,29 @@
 #define TAM 256
 
 int main(int argc, unsigned char** argv){
-    compacta(argv[1]);
+    // compacta(argv[1]);
 
-    //descompacta(argv[1]);
+    // //descompacta(argv[1]);
 
-    FILE *f = fopen("data/musica.mp3.comp", "r");
-    if(f == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
+    // FILE *f = fopen("data/musica.mp3.comp", "r");
+    // if(f == NULL){
+    //     printf("Erro na abertura do arquivo.\n");
+    //     exit(1);
+    // }
 
-    bitmap* bm = leArquivoCompactado(f);
+    // bitmap* bm = leArquivoCompactado(f);
 
-    decodifica(bm);
+    // decodifica(bm, argv[1]);
 
-    fclose(f);   
-    bitmapLibera(bm);
+    // fclose(f);   
+    // bitmapLibera(bm);
 
     return 0;
 }
 
 /** TO DO
  * Entrada com único caractere
- * Mudar o código na abertura de arquivo, está hardcodado
- * Separar em dois programas: um que só compacta e outro que só descompacta OK
+ * Esperar resposta da professora pra ver o que fazer com o nome do arquivo descompactado.
  * Ajeitar makefile por causa dessa separação
  * Relatório
 **/ 

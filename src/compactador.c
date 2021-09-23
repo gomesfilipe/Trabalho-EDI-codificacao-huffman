@@ -1,5 +1,5 @@
 #include "../include/compactador.h"
-#include <math.h>
+//#include <math.h>
 
 bitmap* insereQtdFolhas(Tree* tree, bitmap* bm){
     unsigned char binFolhas[8];
@@ -79,7 +79,9 @@ void converteDecimalParaBinario(unsigned char elem, unsigned char* bin){
 
 bitmap* criaBitMapCompac(Tree* tree){
     int h = altura(tree);
-    int maxSize = pow(2, h + 1) - 1 + 8 * pow(2, h) + 8 + 3; //! trocar o +8 pra +9 dependendo
+    //int maxSize = pow(2, h + 1) - 1 + 8 * pow(2, h) + 8 + 3; //! trocar o +8 pra +9 dependendo
+    int maxSize = (1 << (h + 1)) - 1 + 8 * (1 << h) + 8 + 3; //! trocar o +8 pra +9 dependendo
+    
     //[2^(h+1) - 1] é o máxima número de nós da árvore
     // [8 * 2^h] é o máximo espaço em bits ocupado por cada caractere em um nó folha.
     //+ 9 é devido ao número de folhas que colocamos no início do bitmap a fim de ter uma condição de parada

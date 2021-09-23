@@ -90,7 +90,7 @@ void recriaTree(bitmap* bm, Tree* tree, int* i, int* folhas, int* lixo){
 //     return tree;
 // }
 
-void decodifica(bitmap* bm){
+void decodifica(bitmap* bm, unsigned char* nomeArquivoCompactado){
     int i = 11;
     // int i = 8;
     int folhas = 0;
@@ -106,13 +106,29 @@ void decodifica(bitmap* bm){
     // printf("folhas: [%d]  ", folhas); //!
     // printf("lixo cabecalho:[%d]\n", lixoCabecalho); //!
 
-    decodificaTexto( bm, &i,  tree, lixoTexto);
+    decodificaTexto( bm, &i,  tree, lixoTexto, nomeArquivoCompactado);
     liberaTree(tree);
 }
 
-void decodificaTexto(bitmap* bm, int* i, Tree* tree, int lixoTexto){
+void decodificaTexto(bitmap* bm, int* i, Tree* tree, int lixoTexto, unsigned char* nomeArquivoCompactado){
     Tree* aux = tree;
-    FILE* fWrite = fopen("data/musicadecodificada.mp3", "w");
+    for(int i = strlen(nomeArquivoCompactado) - 1; i >= 0; i--){
+        if(nomeArquivoCompactado[i] == '.'){
+            nomeArquivoCompactado[i] = '\0';
+            break;           
+        }
+    }
+    // data/#tring.txt
+
+    unsigned char nomeArquivoDescompactado[strlen(nomeArquivoCompactado) + 1];
+    nomeArquivoCompactado[5] = '#'; //resposta patriciaaaaa
+    printf("\n\nddfjdij [%s]\n", nomeArquivoCompactado);
+    strcpy(nomeArquivoDescompactado, nomeArquivoCompactado);
+    printf("\n\nddfjdij [%s]\n", nomeArquivoDescompactado);
+
+    
+    FILE* fWrite = fopen(nomeArquivoDescompactado, "w");
+    //FILE* fWrite = fopen("data/musicadecodificada.mp3", "w");
     if(fWrite == NULL){
         printf("Erro na abertura do arquivo!\n");
         exit(1);
@@ -153,14 +169,14 @@ bitmap* recuperaBitmap(unsigned char* str, int tam){
     return bm;
 }
 
-void descompacta(char* nomeArquivoCompactado){
+void descompacta(unsigned char* nomeArquivoCompactado){
     FILE *f = fopen(nomeArquivoCompactado, "r");
     if(f == NULL){
         printf("Erro na abertura do arquivo.\n");
         exit(1);
     }
     bitmap* bm = leArquivoCompactado(f);
-    decodifica(bm);
+    decodifica(bm, nomeArquivoCompactado);
     fclose(f);   
     bitmapLibera(bm);
 }

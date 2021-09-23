@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "../include/tree.h"
 #include "../include/list.h"
 #include "../include/bitmap.h"
@@ -41,14 +42,16 @@ void recriaTree(bitmap* bm, Tree* tree, int* i, int* folhas, int* lixo);
  * @param tree Árvore de codificação de huffman.
  * @param lixoTexto Tamanho do lixo em bits do trecho de texto compactado. 
  * Em outras palavras, é a quantidade de bits que devem ser ignorados no final do bitmap.
+ * @param nomeArquivoCompactado Nome do arquivo .comp.
  **/
-void decodificaTexto(bitmap* bm, int* i, Tree* tree, int lixoTexto);
+void decodificaTexto(bitmap* bm, int* i, Tree* tree, int lixoTexto, unsigned char* nomeArquivoCompactado);
 
 /**
  * @brief Decodifica um bitmap que contém a codificação do arquivo .comp.
  * @param bm Bitmap que contém a codificação do arquivo .comp.
+ * @param nomeArquivoCompactado Nome do arquivo .comp.
  **/
-void decodifica(bitmap* bm);
+void decodifica(bitmap* bm, unsigned char* nomeArquivoCompactado);
 
 /**
  * @brief Pega a parte do cabeçalho que representa o tamanho do lixo do texto e o calcula.
@@ -69,4 +72,4 @@ bitmap* recuperaBitmap(unsigned char* str, int tam);
  * @brief Descompacta um arquivo que foi compactado com a codificação de huffman.
  * @param nomeArquivoCompactado Nome do arquivo compactado com a codificação de huffman.
  **/
-void descompacta(char* nomeArquivoCompactado);
+void descompacta(unsigned char* nomeArquivoCompactado);

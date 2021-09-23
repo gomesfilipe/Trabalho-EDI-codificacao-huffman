@@ -3,7 +3,7 @@
 #include <string.h>
 #include "../include/bitmap.h"
 #include "../include/tree.h"
-#include "../include/lista.h"
+#include "../include/list.h"
 #include "../include/huffman.h"
 #include "../include/compactador.h"
 
