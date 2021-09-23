@@ -32,8 +32,8 @@ int main(int argc, unsigned char** argv){
 }
 
 /** TO DO
- * Entrada com único caractere
- * Esperar resposta da professora pra ver o que fazer com o nome do arquivo descompactado. ok
+ * Entrada com único caractere TESTAR MAIS CASOS.
+ * revisar o código inteiro. (verificar se não faltou documentar nada e retirar comentários que estão em excesso).
  * Ajeitar makefile por causa dessa separação
  * Relatório
 **/ 

@@ -141,10 +141,12 @@ void compacta(unsigned char* nomeArquivo){  // nome_arquivo.qualquer_coisa
     imprimeTabelaCodificacao(tabela); //!
     int pesoArquivoBit = calculaBits(tabela, pesos);
 
-    unsigned char nomeArquivoCompac[strlen(path) + 5]; 
-    
+    unsigned char nomeArquivoCompac[strlen(path) + 5];
+    geraNomeArquivoCompac(nomeArquivoCompac, path);
+
     FILE* fWrite = fopen(nomeArquivoCompac, "w");
     if(fWrite == NULL){
+        printf("entrou aq\n");
         printf("Erro na abertura do arquivo!\n");
         exit(1);
     }

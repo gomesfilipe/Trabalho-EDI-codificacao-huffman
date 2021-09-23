@@ -7,15 +7,24 @@ Tree* huffman(List* list){
     Tree* tree2;
     Tree* tree3;
     int peso1, peso2;
-    while(getTam(list) != 1){
-        tree1 = removeFirst(list);
+    
+    if(getTam(list) == 1){ // Se a lista só possui uma única árvore, coloca a folha à esquerda do nó raiz.
         tree2 = removeFirst(list);
-        peso1 = getPeso(tree1);
         peso2 = getPeso(tree2);
-     
-        tree3 = criaTree(0, peso1 + peso2, tree1, tree2); // Elem é 0, pois é o NULL na tabela ascii. Tree3 tem conteúdo NULL pois seu nó raíz não é uma folha.
-        insereOrdenado(list, tree3);
+        tree3 = criaTree(0, peso2, tree2, NULL);
+        
+    } else{
+        while(getTam(list) != 1){
+            tree1 = removeFirst(list);
+            tree2 = removeFirst(list);
+            peso1 = getPeso(tree1);
+            peso2 = getPeso(tree2);
+        
+            tree3 = criaTree(0, peso1 + peso2, tree1, tree2); // Elem é 0, pois é o NULL na tabela ascii. Tree3 tem conteúdo NULL pois seu nó raíz não é uma folha.
+            insereOrdenado(list, tree3);
+        }
     }
+    
 
     return tree3;
 }
@@ -42,22 +51,13 @@ List* geraListaTree(int* pesos){
     return list;
 }
 
-// Tree* geraArvoreCodificacao(FILE *f){
-//     int *pesos = calculaPesos(f);
-//     List* list = geraListaTree(pesos);
-//     Tree* tree = huffman(list);
-//     free(pesos);
-//     liberaLista(list);
-//     return tree;
-// }
-
 Tree* geraArvoreCodificacao(int* pesos){
     List* list = geraListaTree(pesos);
     Tree* tree = huffman(list);
     liberaLista(list);
-    printf("\narvore de compactacao:\n\n"); 
-    imprimeTree(tree);
-    printf("\n\n");
+    // printf("\narvore de compactacao:\n\n"); 
+    // imprimeTree(tree);
+    // printf("\n\n");
     return tree;
 }
 

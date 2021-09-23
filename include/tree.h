@@ -44,6 +44,7 @@ Tree* criaVazia();
 /**
  * @brief Cria uma ávore com seu conteúdo e filhos inicializados.
  * @param elem Elemento que estará no nó raiz da árvore criada.
+ * @param peso Peso do nó raiz da árvore.
  * @param left Ponteiro para subárvore esquerda.
  * @param right Ponteiro para subárvore direita.
  * @return Árvore criada e inicializada.
