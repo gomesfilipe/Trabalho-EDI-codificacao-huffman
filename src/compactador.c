@@ -45,17 +45,17 @@ void codificaTree(Tree* tree, bitmap* bm){
         if(ehFolha(tree) == 0){
          
             bitmapAppendLeastSignificantBit(bm, '0');
-            printf("0 "); //!
+            //printf("0 "); //!
             codificaTree( getLeft(tree)  , bm);
             codificaTree( getRight(tree) , bm);
 
         }
         else{
             bitmapAppendLeastSignificantBit(bm, '1'); //Nó folha
-            printf("1 "); //!
+            //printf("1 "); //!
             elemento = getElem(tree);
             converteDecimalParaBinario(elemento, bin);
-            printf("%s ", bin); //!
+            //printf("%s ", bin); //!
             for(int i = 0; i <= 7 ; i++){
                 bitmapAppendLeastSignificantBit(bm, bin[i]); //Bits do elemento 
             }
@@ -103,7 +103,7 @@ bitmap* codificaTexto(FILE* f, unsigned char** tabela, int pesoArquivoBit, int p
         //printf("tam [%d] ", tam);
         for(int j = 0; j < strlen(tabela[aux]); j++){
             bitmapAppendLeastSignificantBit(bm, tabela[aux][j]);
-            printf("%c", tabela[aux][j]);
+            //printf("%c", tabela[aux][j]);
         }
         //printf("] ");
     }
@@ -138,7 +138,7 @@ void compacta(unsigned char* nomeArquivo){  // nome_arquivo.qualquer_coisa
     
     unsigned char** tabela = criaTabelaCodificacao(tree);
     tabela = inicializaTabelaCodificacao(tree, tabela, "");
-    imprimeTabelaCodificacao(tabela); //!
+    //imprimeTabelaCodificacao(tabela); //!
     int pesoArquivoBit = calculaBits(tabela, pesos);
 
     unsigned char nomeArquivoCompac[strlen(path) + 5];
@@ -146,7 +146,6 @@ void compacta(unsigned char* nomeArquivo){  // nome_arquivo.qualquer_coisa
 
     FILE* fWrite = fopen(nomeArquivoCompac, "w");
     if(fWrite == NULL){
-        printf("entrou aq\n");
         printf("Erro na abertura do arquivo!\n");
         exit(1);
     }

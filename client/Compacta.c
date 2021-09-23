@@ -11,3 +11,8 @@ int main(int argc, unsigned char** argv){
     compacta(argv[1]); // arquivo.formato
     return 0;
 }
+
+/** TO DO
+ * revisar o código inteiro. (verificar se não faltou documentar nada e retirar comentários que estão em excesso).
+ * Relatório
+**/ 
