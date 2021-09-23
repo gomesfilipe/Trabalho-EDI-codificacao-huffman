@@ -8,7 +8,6 @@ TARGET1 := Compacta
 TARGET2 := Descompacta
 
 LIBS := -lm
-#CFLAGS := -g -O3 -Wno-unused-result
 
 OBJDIR1 := obj_compacta/
 OBJDIR2 := obj_descompacta/
@@ -22,7 +21,7 @@ CLI1 := client/Compacta.c
 CLI2 := client/Descompacta.c
 CC := gcc
 
-all: $(TARGET1) $(TARGET2)
+all: $(TARGET1) $(TARGET2)  
 
 SRC = $(wildcard $(SRCDIR)*.c)
 HEADERS = $(wildcard $(INCLUDEDIR)*.h)
@@ -56,15 +55,15 @@ $(TARGET1): $(OBJECTS1)
 $(TARGET2): $(OBJECTS2)
 	$(CC) $(INCLUDE_PATHS) $(OBJECTS2) $(LIBS) -o $@
 
-clean: # Remove pasta com os arquivos objeto.
+clean: # Remove executáveis e pastas com os arquivos objetos.
 	-rm -f -r $(OBJDIR1)
 	-rm -f -r $(OBJDIR2)
 	-rm -f *.o
 	-rm -f $(TARGET1)
 	-rm -f $(TARGET2)
 
-runComp:
+runComp: # Executa o Compacta.c
 	valgrind ./$(TARGET1) $(NOMECOMPACTA)
 
-runDescomp:
+runDescomp: # Executa o Descompacta.c
 	valgrind ./$(TARGET2) $(NOMEDESCOMPACTA)

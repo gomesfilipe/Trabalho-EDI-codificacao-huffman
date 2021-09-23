@@ -1,5 +1,4 @@
 #include "../include/compactador.h"
-//#include <math.h>
 
 bitmap* insereQtdFolhas(Tree* tree, bitmap* bm){
     unsigned char binFolhas[8];
@@ -8,14 +7,10 @@ bitmap* insereQtdFolhas(Tree* tree, bitmap* bm){
     unsigned char folhasAux = (unsigned char) folhas;
     unsigned char c;
     converteDecimalParaBinario(folhasAux, binFolhas);
-    //printf("%s ", binFolhas);
     
     for(int i = 0; i < 8 ; i++){
-        bitmapAppendLeastSignificantBit(bm, binFolhas[i]); //Bits das folhas 
-        //c = bitmapGetContents(bm)[i];
-        //printf("[%c] ", c);
+        bitmapAppendLeastSignificantBit(bm, binFolhas[i]); // Bits das folhas 
     }
-    //unsigned char* bitmapGetContents(bitmap* bm)
     return bm;
 }
 
@@ -43,23 +38,18 @@ void codificaTree(Tree* tree, bitmap* bm){
     
     if(ehVazia(tree) == 0){
         if(ehFolha(tree) == 0){
-         
             bitmapAppendLeastSignificantBit(bm, '0');
-            //printf("0 "); //!
             codificaTree( getLeft(tree)  , bm);
             codificaTree( getRight(tree) , bm);
-
-        }
-        else{
-            bitmapAppendLeastSignificantBit(bm, '1'); //Nó folha
-            //printf("1 "); //!
+        
+        } else{
+            bitmapAppendLeastSignificantBit(bm, '1'); // Nó folha
             elemento = getElem(tree);
             converteDecimalParaBinario(elemento, bin);
-            //printf("%s ", bin); //!
-            for(int i = 0; i <= 7 ; i++){
-                bitmapAppendLeastSignificantBit(bm, bin[i]); //Bits do elemento 
-            }
 
+            for(int i = 0; i <= 7 ; i++){
+                bitmapAppendLeastSignificantBit(bm, bin[i]); // Bits do elemento 
+            }
         }
     }
 }
@@ -79,51 +69,39 @@ void converteDecimalParaBinario(unsigned char elem, unsigned char* bin){
 
 bitmap* criaBitMapCompac(Tree* tree){
     int h = altura(tree);
-    //int maxSize = pow(2, h + 1) - 1 + 8 * pow(2, h) + 8 + 3; //! trocar o +8 pra +9 dependendo
-    int maxSize = (1 << (h + 1)) - 1 + 8 * (1 << h) + 8 + 3; //! trocar o +8 pra +9 dependendo
-    
-    //[2^(h+1) - 1] é o máxima número de nós da árvore
+    int maxSize = (1 << (h + 1)) - 1 + 8 * (1 << h) + 8 + 3;
+    // [2^(h+1) - 1] é o máxima número de nós da árvore
     // [8 * 2^h] é o máximo espaço em bits ocupado por cada caractere em um nó folha.
-    //+ 9 é devido ao número de folhas que colocamos no início do bitmap a fim de ter uma condição de parada
+    // +8 é devido ao número de folhas que colocamos no início do bitmap a fim de ter uma condição de parada
+    // +3 é para a quantidade de bits para o lixo do texto.
     bitmap* bm = bitmapInit(maxSize);
     return bm;
 }
 
-//O peso do arquivo já vem em bits
 bitmap* codificaTexto(FILE* f, unsigned char** tabela, int pesoArquivoBit, int pesoArquivoByte){
     bitmap* bm = bitmapInit(pesoArquivoBit); 
-    //printf("peso byte [%d]\n", pesoArquivoByte);
     unsigned char aux;
     for(int i = 0; i < pesoArquivoByte; i++){
-        //fscanf(f, "%c", &aux);
         fscanf(f, "%c", &aux);
-        //printf("aux [%c] ", aux);
-        //printf("[");
-        //int tam = strlen(tabela[aux]) ;
-        //printf("tam [%d] ", tam);
+ 
         for(int j = 0; j < strlen(tabela[aux]); j++){
             bitmapAppendLeastSignificantBit(bm, tabela[aux][j]);
-            //printf("%c", tabela[aux][j]);
         }
-        //printf("] ");
     }
     return bm;
 }
 
-//O cabeçalho é impresso junto a um possível lixo de memória que deveser tratado posteriormente 
-//na decodificação
 void imprimeBitmapArquivo(FILE* f, bitmap* bm){
     unsigned char* cabecalho = bitmapGetContents(bm);
     int tam = bitmapGetLength(bm);
-    tam = (tam + 7) / 8; //+ 1; // passando pra bytes, tratar lixo.
-    //int restante = 8 - tam%8 ;
+    tam = (tam + 7) / 8; // passando pra bytes
 
     for(int i = 0; i < tam ; i++){
         fprintf(f, "%c" , cabecalho[i]);
     }
 }
 
-void compacta(unsigned char* nomeArquivo){  // nome_arquivo.qualquer_coisa
+void compacta(unsigned char* nomeArquivo){  // nome_arquivo.formato
     unsigned char path[strlen(nomeArquivo) + 6];
     strcpy(path, "data/");
     strcat(path, nomeArquivo); // path possui caminho para o arquivo.
@@ -138,7 +116,6 @@ void compacta(unsigned char* nomeArquivo){  // nome_arquivo.qualquer_coisa
     
     unsigned char** tabela = criaTabelaCodificacao(tree);
     tabela = inicializaTabelaCodificacao(tree, tabela, "");
-    //imprimeTabelaCodificacao(tabela); //!
     int pesoArquivoBit = calculaBits(tabela, pesos);
 
     unsigned char nomeArquivoCompac[strlen(path) + 5];
@@ -151,10 +128,7 @@ void compacta(unsigned char* nomeArquivo){  // nome_arquivo.qualquer_coisa
     }
 
     //Codificação do cabeçalho
-    //printf("chegou antes bm cabecalho\n");
     bitmap* bmCabecalho = criaBitMapCompac(tree);
-    //printf("chegou depois bm cabecalho\n");
-    
     bmCabecalho = insereQtdFolhas(tree, bmCabecalho);
     bmCabecalho = insereLixoTexto(pesoArquivoBit, bmCabecalho);
     codificaTree(tree, bmCabecalho);

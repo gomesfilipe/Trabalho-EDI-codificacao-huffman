@@ -20,7 +20,6 @@ int getTam(List* list){
     return list->tam;
 }
 
-
 List* criaLista(){
     List* list = (List*) malloc(sizeof(List));
     list->first = NULL;
@@ -47,7 +46,6 @@ int listVazia(List* list){
     return 0;
 }
 
-//pra funcionar a lista já precisa estar previamente ordenada
 void insereOrdenado(List* list, Tree* tree){
     Celula* nova = (Celula*) malloc(sizeof(Celula));
     nova->tree = tree;
@@ -70,21 +68,17 @@ void insereOrdenado(List* list, Tree* tree){
                 list->first = nova;
                 break;
             
-        
             } else{ // Caso comum
                 ant->next = nova;
                 nova->next = i;
                 break;
             }
-        }
-        else if(i == NULL){ // Elemento tem peso maior que todos os outros que já estão na lista.
-                //!printf("chegou no ultimo else if\n");
+        } else if(i == NULL){ // Elemento tem peso maior que todos os outros que já estão na lista.
                 nova->next = NULL;
                 ant->next = nova;
                 list->last = nova; 
                 break;
         }    
-
         ant = i;  
     }
     list->tam++;

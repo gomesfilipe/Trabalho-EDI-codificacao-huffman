@@ -63,7 +63,6 @@ int altura(Tree* tree){
     if(ehVazia(tree)){
         return -1;
     }
-
     return 1 + maior(altura(tree->left), altura(tree->right));
 }
 

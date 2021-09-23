@@ -7,7 +7,6 @@ bitmap* leArquivoCompactado(FILE* fRComp){
     unsigned char* str = (unsigned char*) malloc (tam * sizeof(unsigned char)); // 499 caracteres + \0
     int i;
     for(i = 0; ; i++){
-        //printf("i qtd: %d\n", i);
         fscanf(fRComp, "%c" , &str[i]);
         if(feof(fRComp)){
             break;
@@ -18,15 +17,9 @@ bitmap* leArquivoCompactado(FILE* fRComp){
         }
     }
     str[i] = '\0';
-    // bitmap* bm = bitmapInit(8 * i + 8); // Multiplicamos por 8 para converter para bits e soma 8 para o \0.
-    // //Setando a string no campo contests do bitmap
-    // for(int j = 0; j < i; j++){
-    //     for(int k = 7; k >= 0; k--){
-    //         bitmapAppendLeastSignificantBit(bm, (str[j] >> k) & 1);
-    //     }
-    // }
+
     bitmap* bm = recuperaBitmap(str, i);
-    //unsigned int tamLength = bitmapGetLength(bm);
+
     free(str);
     return bm;
 }
@@ -34,13 +27,11 @@ bitmap* leArquivoCompactado(FILE* fRComp){
 void recriaTree(bitmap* bm, Tree* tree, int* i, int* folhas, int* lixo){
     unsigned char bit;
     int posAscii = 0;
-    //static int* lixo = 0;
     int totalFolhas = bitmapGetContents(bm)[0] + 1; //Somamos 1 pois na hora de codificar tínhamos 
-    //subtraído 1 a fim de deixar o número de folhas com 8 bits 
-    //printf("total de folhas [%d]\n", totalFolhas);
+    // subtraído 1 a fim de deixar o número de folhas com 8 bits 
    
     bit = bitmapGetBit(bm, *i);
-    (*lixo)++;//incrementar aqui 
+    (*lixo)++; 
     (*i)++;
     if(bit == 0){ // não é folha, crie os próximos dois nós e chame recursivamente.
         Tree* left = criaTree(0, -1, NULL, NULL);
@@ -53,12 +44,10 @@ void recriaTree(bitmap* bm, Tree* tree, int* i, int* folhas, int* lixo){
         }
 
     } else{ // é folha, leia os proximos 8 bits e coloque no campo 'elem'.
-        //*i = *i + 1;
         for(int j = 0; j <= 7 ; j++, (*i)++){
             bit = bitmapGetBit(bm, *i);
             (*lixo)++;//incrementar aqui 
-            if(bit == 1){
-                //posAscii += pow(2, 7 - j); 
+            if(bit == 1){ 
                 posAscii += 1 << (7 - j);
             }
         }
@@ -75,24 +64,8 @@ void recriaTree(bitmap* bm, Tree* tree, int* i, int* folhas, int* lixo){
     }
 }
 
-// Tree* decodificaCabecalho(bitmap* bm){
-//     int i = 8;
-//     int folhas = 0;
-//     int lixo = 0;
-//     Tree* tree = criaTree(0, -1, NULL, NULL);
-
-//     recriaTree(bm, tree, &i, &folhas, &lixo);
-
-//     printf("i: [%d]  ", i);
-//     printf("folhas: [%d]  ", folhas);
-//     printf("lixo:[%d]\n", lixo);
-
-//     return tree;
-// }
-
 void decodifica(bitmap* bm, unsigned char* nomeArquivoCompactado){
     int i = 11;
-    // int i = 8;
     int folhas = 0;
     int lixoCabecalho = 3; // inicializado com 3 pois os 3 primeiros bits do segundo byte é o tamanho do lixo do texto.
     int lixoTexto = getLixoTexto(bm);
@@ -100,11 +73,6 @@ void decodifica(bitmap* bm, unsigned char* nomeArquivoCompactado){
     Tree* tree = criaTree(0, -1, NULL, NULL);
 
     recriaTree(bm, tree, &i, &folhas, &lixoCabecalho);
-    //printf("arvore recriada:\n\n");
-    //imprimeTree(tree);
-    // printf("i: [%d]  ", i); //!
-    // printf("folhas: [%d]  ", folhas); //!
-    // printf("lixo cabecalho:[%d]\n", lixoCabecalho); //!
 
     decodificaTexto( bm, &i,  tree, lixoTexto, nomeArquivoCompactado);
     liberaTree(tree);
@@ -129,8 +97,7 @@ void decodificaTexto(bitmap* bm, int* i, Tree* tree, int lixoTexto, unsigned cha
         exit(1);
     }
     
-    for( (*i) ; (*i) < bitmapGetLength(bm) - lixoTexto; (*i)++){ //acho q tem tirar o lixo aqui e colocar le como paramentro
-        
+    for( (*i) ; (*i) < bitmapGetLength(bm) - lixoTexto; (*i)++){     
         if(bitmapGetBit(bm, *i) == 0){
             aux = getLeft(aux); // pegando ponteiro pra árvore filha esquerda
         } else{

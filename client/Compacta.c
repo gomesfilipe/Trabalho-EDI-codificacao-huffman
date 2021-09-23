@@ -12,7 +12,4 @@ int main(int argc, unsigned char** argv){
     return 0;
 }
 
-/** TO DO
- * revisar o código inteiro. (verificar se não faltou documentar nada e retirar comentários que estão em excesso).
- * Relatório
-**/ 
+//TODO Fazer relatório e fazer mais testes com arquivos maiores.

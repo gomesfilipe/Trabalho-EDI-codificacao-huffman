@@ -33,11 +33,8 @@ int* calculaPesos(FILE *f){
     int* pesos = (int*) calloc(TAM, sizeof(int)); //Declaração do vetor de caracteres
     unsigned char caractere;
     while(fscanf(f, "%c", &caractere) == 1){
-        //printf("(%c) ", caractere);
         pesos[caractere]++;
     }
-    // colocando um espaço a mais para o caractere '\a' na lista de árvores.
-    //!pesos[7]++; // Esse caracter a mais '\a' será a condição de parada do arquivo.
     return pesos;
 }
 
@@ -55,21 +52,16 @@ Tree* geraArvoreCodificacao(int* pesos){
     List* list = geraListaTree(pesos);
     Tree* tree = huffman(list);
     liberaLista(list);
-    // printf("\narvore de compactacao:\n\n"); 
-    // imprimeTree(tree);
-    // printf("\n\n");
     return tree;
 }
 
 unsigned char** criaTabelaCodificacao(Tree* tree){
     int h = altura(tree); // Tamanho máximo de um caminho para folha.
     //Criando a tabela 
-    unsigned char** tabela = (unsigned char**) malloc(sizeof(unsigned char*) * TAM); //[TAM][h]; 
+    unsigned char** tabela = (unsigned char**) malloc(sizeof(unsigned char*) * TAM);
     for(int i = 0; i < TAM; i++){
-        tabela[i] = (unsigned char*) malloc(sizeof(unsigned char) * (h + 1)); //! wtf? misterio.
+        tabela[i] = (unsigned char*) malloc(sizeof(unsigned char) * (h + 1)); // 1 a mais por causa do \0
         strcpy(tabela[i], "");
-        //printf("[%s] tam: [%ld] | ", tabela[i], strlen(tabela[i]));
-        //tabela[i] = "";
     }
     return tabela;
 }
@@ -86,7 +78,6 @@ unsigned char** inicializaTabelaCodificacao(Tree* tree, unsigned char** tabela, 
     if(tree != NULL){
         if(ehFolha(tree)){
             elem = getElem(tree);
-            //printf("(%c)", elem);
             strcpy(tabela[elem], caminho);
             return tabela;
         }
@@ -109,7 +100,6 @@ unsigned char** inicializaTabelaCodificacao(Tree* tree, unsigned char** tabela, 
 void imprimeTabelaCodificacao(unsigned char** tabela){
     for(int i = 0; i < TAM; i++){
         if(strcmp(tabela[i], "") != 0){
-            //printf("\n[%s][%c]", tabela[i], i);
             printf("\n %c [%s]",  i, tabela[i]);
         }
     }
