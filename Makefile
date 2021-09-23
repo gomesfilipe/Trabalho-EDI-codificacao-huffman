@@ -5,10 +5,13 @@ descomp:
 	gcc src/*.c client/Descompacta.c -o tp2
 
 run1:
-	valgrind ./tp2 data/string.txt
+#valgrind ./tp2 data/string.txt
+	valgrind ./tp2 string.txt
+
 
 run2:
-	valgrind ./tp2 data/string.txt.comp
+#	valgrind ./tp2 data/string.txt.comp
+	valgrind ./tp2 string.txt.comp
 
 # TARGET := tp2
 # LIBS := -lm

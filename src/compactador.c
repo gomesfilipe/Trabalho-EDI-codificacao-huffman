@@ -123,8 +123,12 @@ void imprimeBitmapArquivo(FILE* f, bitmap* bm){
     }
 }
 
-void compacta(unsigned char* nomeArquivo){
-    FILE* fRead  = fopen(nomeArquivo, "r");
+void compacta(unsigned char* nomeArquivo){  // nome_arquivo.qualquer_coisa
+    unsigned char path[strlen(nomeArquivo) + 6];
+    strcpy(path, "data/");
+    strcat(path, nomeArquivo); // path possui caminho para o arquivo.
+
+    FILE* fRead  = fopen(path, "r");
     if(fRead == NULL){
         printf("Erro na abertura do arquivo!\n");
         exit(1);
@@ -137,10 +141,8 @@ void compacta(unsigned char* nomeArquivo){
     imprimeTabelaCodificacao(tabela); //!
     int pesoArquivoBit = calculaBits(tabela, pesos);
 
-    unsigned char nomeArquivoCompac[strlen(nomeArquivo) + 4];
-    geraNomeArquivoCompac(nomeArquivoCompac, nomeArquivo);
+    unsigned char nomeArquivoCompac[strlen(path) + 5]; 
     
-
     FILE* fWrite = fopen(nomeArquivoCompac, "w");
     if(fWrite == NULL){
         printf("Erro na abertura do arquivo!\n");
@@ -148,9 +150,9 @@ void compacta(unsigned char* nomeArquivo){
     }
 
     //Codificação do cabeçalho
-    printf("chegou antes bm cabecalho\n");
+    //printf("chegou antes bm cabecalho\n");
     bitmap* bmCabecalho = criaBitMapCompac(tree);
-    printf("chegou depois bm cabecalho\n");
+    //printf("chegou depois bm cabecalho\n");
     
     bmCabecalho = insereQtdFolhas(tree, bmCabecalho);
     bmCabecalho = insereLixoTexto(pesoArquivoBit, bmCabecalho);
@@ -161,12 +163,11 @@ void compacta(unsigned char* nomeArquivo){
     int pesoArquivoByte = getPeso(tree);
     rewind(fRead);
     
-    printf("chegou antes bm texto\n");
     bitmap* bmTexto = codificaTexto(fRead, tabela, pesoArquivoBit, pesoArquivoByte);
-    printf("chegou depois bm texto\n");
     imprimeBitmapArquivo(fWrite, bmTexto);
 
     liberaTudoCompactador(pesos, tree, tabela, bmCabecalho, bmTexto, fRead, fWrite);
+    remove(path); //Apagando arquivo de entrada da compactação.
 }
 
 void liberaTudoCompactador(int* pesos, Tree* tree, unsigned char** tabela, bitmap* bmCabecalho, bitmap* bmTexto, FILE* fRead, FILE* fWrite){
@@ -178,25 +179,8 @@ void liberaTudoCompactador(int* pesos, Tree* tree, unsigned char** tabela, bitma
     fclose(fRead);
     fclose(fWrite);
 }
-// //!apagar depois
-// void geraNomeArquivoCompac(char* nomeArquivoCompac, char* nomeArquivo){
-//     strcpy(nomeArquivoCompac, nomeArquivo);
-//     for(int i = strlen(nomeArquivoCompac) - 1 ; i >= 0 ; i--){
-//         if(nomeArquivoCompac[i] == '.'){
-//             nomeArquivoCompac[i] = '\0';
-//             break;
-//         }
-//     }
-//     strcat(nomeArquivoCompac, ".comp");
-// }
 
-void geraNomeArquivoCompac(unsigned char* nomeArquivoCompac, unsigned char* nomeArquivo){
-    strcpy(nomeArquivoCompac, nomeArquivo);
-    // for(int i = strlen(nomeArquivoCompac) - 1 ; i >= 0 ; i--){
-    //     if(nomeArquivoCompac[i] == '.'){
-    //         nomeArquivoCompac[i] = '\0';
-    //         break;
-    //     }
-    // }
+void geraNomeArquivoCompac(unsigned char* nomeArquivoCompac, unsigned char* path){
+    strcpy(nomeArquivoCompac, path);
     strcat(nomeArquivoCompac, ".comp");
 }

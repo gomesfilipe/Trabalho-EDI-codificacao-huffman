@@ -79,9 +79,9 @@ void liberaTudoCompactador(int* pesos, Tree* tree, unsigned char** tabela, bitma
  * @brief Preenche uma string com o nome do arquivo compactado. Na prática,
  * essa função concatena o nome do arquivo que será codificado com ".comp".
  * @param nomeArquivoCompac Ponteiro para string que terá o nome do arquivo .comp.
- * @param nomeArquivo Ponteiro para nome do arquivo que será compactado
+ * @param path Ponteiro para o arquivo que será compactado
  **/
-void geraNomeArquivoCompac(unsigned char* nomeArquivoCompac, unsigned char* nomeArquivo);
+void geraNomeArquivoCompac(unsigned char* nomeArquivoCompac, unsigned char* path);
 
 /**
  * @brief Calcula o tamanho do lixo do trecho de texto codificado. 

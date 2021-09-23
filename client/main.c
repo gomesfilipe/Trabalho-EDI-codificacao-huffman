@@ -33,7 +33,7 @@ int main(int argc, unsigned char** argv){
 
 /** TO DO
  * Entrada com único caractere
- * Esperar resposta da professora pra ver o que fazer com o nome do arquivo descompactado.
+ * Esperar resposta da professora pra ver o que fazer com o nome do arquivo descompactado. ok
  * Ajeitar makefile por causa dessa separação
  * Relatório
 **/ 

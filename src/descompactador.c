@@ -100,8 +100,8 @@ void decodifica(bitmap* bm, unsigned char* nomeArquivoCompactado){
     Tree* tree = criaTree(0, -1, NULL, NULL);
 
     recriaTree(bm, tree, &i, &folhas, &lixoCabecalho);
-    printf("arvore recriada:\n\n");
-    imprimeTree(tree);
+    //printf("arvore recriada:\n\n");
+    //imprimeTree(tree);
     // printf("i: [%d]  ", i); //!
     // printf("folhas: [%d]  ", folhas); //!
     // printf("lixo cabecalho:[%d]\n", lixoCabecalho); //!
@@ -112,28 +112,23 @@ void decodifica(bitmap* bm, unsigned char* nomeArquivoCompactado){
 
 void decodificaTexto(bitmap* bm, int* i, Tree* tree, int lixoTexto, unsigned char* nomeArquivoCompactado){
     Tree* aux = tree;
-    for(int i = strlen(nomeArquivoCompactado) - 1; i >= 0; i--){
-        if(nomeArquivoCompactado[i] == '.'){
-            nomeArquivoCompactado[i] = '\0';
+    unsigned char nomeArquivoDescompactado[strlen(nomeArquivoCompactado)];
+    strcpy(nomeArquivoDescompactado, nomeArquivoCompactado);
+
+    //Retirando o .comp do nome do arquivo
+    for(int i = strlen(nomeArquivoDescompactado) - 1; i >= 0; i--){
+        if(nomeArquivoDescompactado[i] == '.'){
+            nomeArquivoDescompactado[i] = '\0';
             break;           
         }
     }
-    // data/#tring.txt
-
-    unsigned char nomeArquivoDescompactado[strlen(nomeArquivoCompactado) + 1];
-    nomeArquivoCompactado[5] = '#'; //resposta patriciaaaaa
-    printf("\n\nddfjdij [%s]\n", nomeArquivoCompactado);
-    strcpy(nomeArquivoDescompactado, nomeArquivoCompactado);
-    printf("\n\nddfjdij [%s]\n", nomeArquivoDescompactado);
-
     
     FILE* fWrite = fopen(nomeArquivoDescompactado, "w");
-    //FILE* fWrite = fopen("data/musicadecodificada.mp3", "w");
     if(fWrite == NULL){
         printf("Erro na abertura do arquivo!\n");
         exit(1);
     }
-    printf("lixo texto: [%d]\n", lixoTexto);
+    
     for( (*i) ; (*i) < bitmapGetLength(bm) - lixoTexto; (*i)++){ //acho q tem tirar o lixo aqui e colocar le como paramentro
         
         if(bitmapGetBit(bm, *i) == 0){
@@ -146,6 +141,7 @@ void decodificaTexto(bitmap* bm, int* i, Tree* tree, int lixoTexto, unsigned cha
             aux = tree; // resetando pro nó raiz    
         }
     }
+    remove(nomeArquivoCompactado);
     fclose(fWrite);
 }
 
@@ -170,13 +166,17 @@ bitmap* recuperaBitmap(unsigned char* str, int tam){
 }
 
 void descompacta(unsigned char* nomeArquivoCompactado){
-    FILE *f = fopen(nomeArquivoCompactado, "r");
+    unsigned char path[strlen(nomeArquivoCompactado) + 20] ;
+    strcpy(path, "data/");
+    strcat(path, nomeArquivoCompactado);
+    
+    FILE *f = fopen(path, "r");
     if(f == NULL){
         printf("Erro na abertura do arquivo.\n");
         exit(1);
     }
     bitmap* bm = leArquivoCompactado(f);
-    decodifica(bm, nomeArquivoCompactado);
+    decodifica(bm, path);
     fclose(f);   
     bitmapLibera(bm);
 }

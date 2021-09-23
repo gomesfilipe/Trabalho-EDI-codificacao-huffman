@@ -8,6 +8,6 @@
 #include "../include/compactador.h"
 
 int main(int argc, unsigned char** argv){
-    compacta(argv[1]); // data/arquivo.formato
+    compacta(argv[1]); // arquivo.formato
     return 0;
 }
