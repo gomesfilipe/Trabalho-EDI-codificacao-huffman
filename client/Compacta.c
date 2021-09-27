@@ -1,3 +1,12 @@
+/**
+ * Alunos:
+ * Filipe Gomes Arante de Souza - 2020100625
+ * Elaine Dias Pires - 2020101903
+ * 
+ * Professora: Patricia Dockhorn Costa
+ * Estrutura de Dados I 
+ **/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,8 +17,11 @@
 #include "../include/compactador.h"
 
 int main(int argc, unsigned char** argv){
-    compacta(argv[1]); // arquivo.formato
+    if(argc != 2){
+        printf("Numero incorreto de argumentos na linha de comando.\n");
+        exit(1);
+    }
+    
+    compacta(argv[1]); // arquivo.(formato)
     return 0;
 }
-
-//TODO Fazer relatório e fazer mais testes com arquivos maiores.

@@ -1,3 +1,12 @@
+/**
+ * Alunos:
+ * Filipe Gomes Arante de Souza - 2020100625
+ * Elaine Dias Pires - 2020101903
+ * 
+ * Professora: Patricia Dockhorn Costa
+ * Estrutura de Dados I 
+ **/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,6 +17,11 @@
 #include "../include/descompactador.h"
 
 int main(int argc, unsigned char** argv){
-    descompacta(argv[1]); // arquivo.formato.comp
+    if(argc != 2){
+        printf("Numero incorreto de argumentos na linha de comando.\n");
+        exit(1);
+    }
+
+    descompacta(argv[1]); // arquivo.(formato).comp
     return 0;
 }

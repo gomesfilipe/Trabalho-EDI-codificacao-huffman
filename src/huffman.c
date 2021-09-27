@@ -24,8 +24,6 @@ Tree* huffman(List* list){
             insereOrdenado(list, tree3);
         }
     }
-    
-
     return tree3;
 }
 
